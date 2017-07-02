@@ -36,6 +36,7 @@ class LeadEnrichmentService {
                     console.log("body: " + body);
                     var teste = JSON.stringify(body);
                     console.log(teste);
+                    var info = JSON.parse(body);
                     console.log("info: " + info);
                     return callback(info);
                     //ADD data to our database
