@@ -4,7 +4,7 @@ var request = require('request');
 
 class LeadEnrichmentService {
 
-    constructor(lead_id) {
+    constructor(lead_id, callback) {
         request.post(
             'https://rdstation-webhook.herokuapp.com/lead-info',
             { json: { lead_id: lead_id } },
