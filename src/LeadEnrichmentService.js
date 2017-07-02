@@ -34,7 +34,8 @@ class LeadEnrichmentService {
                 console.log("REQUEST");
                 if (!error && response.statusCode == 200) {
                     console.log("body: " + body);
-                    var info = JSON.parse(body);
+                    var teste = JSON.stringify(body);
+                    console.log(teste);
                     console.log("info: " + info);
                     return callback(info);
                     //ADD data to our database
