@@ -14,10 +14,10 @@ class LeadEnrichmentService {
                     this._name = body.name;
                     this._company = body.company;
                     this._cnpj = "04.724.734/0001-74";
+                    console.log(this._cnpj);
                 }
             }
         );
-
     }
 
     enrich(result){
