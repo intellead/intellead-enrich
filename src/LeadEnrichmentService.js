@@ -11,7 +11,7 @@ class LeadEnrichmentService {
         this._cnpj = cnpj;
     }
 
-    enrich(result){
+    enrich(callback){
         if (this._email) {
 
         }
@@ -21,10 +21,12 @@ class LeadEnrichmentService {
         if (this._company) {
 
         }
-        return result(this.enrichByReceitaWS());
+        this.enrichByReceitaWS(function(result) {
+            return callback(result);
+        });
     }
 
-    enrichByReceitaWS() {
+    enrichByReceitaWS(callback) {
         console.log("_CNPJ: "+this._cnpj);
         if (this._cnpj) {
             var queryReceitaws = 'https://receitaws-data.herokuapp.com/?cnpj='+this._cnpj;
@@ -34,7 +36,7 @@ class LeadEnrichmentService {
                     console.log("body: " + body);
                     var info = JSON.parse(body);
                     console.log("info: " + info);
-                    return info;
+                    return callback(info);
                     //ADD data to our database
                 }
             });
