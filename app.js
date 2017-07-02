@@ -32,12 +32,23 @@ app.use('/', router);
 // Route that receives a POST request to lead-enrichment/
 app.post('/lead-enrichment', function (req, res) {
     var lead_id = req.body.lead_id;
-    var service = new LeadEnrichmentService(lead_id);
-    service.enrich(function(result) {
-        console.log("before send status: " + result);
-        res.status(200).send(result);
-    });
-
+    request.post(
+        'https://rdstation-webhook.herokuapp.com/lead-info',
+        { json: { lead_id: lead_id } },
+        function (error, response, body) {
+            if (!error && response.statusCode == 200) {
+                var email = body.email;
+                var name = body.name;
+                var company = body.company;
+                var cnpj = "04.724.734/0001-74";
+                var service = new LeadEnrichmentService(email, name, company, cnpj);
+                service.enrich(function(result) {
+                    console.log("before send status: " + result);
+                    res.status(200).send(result);
+                });
+            }
+        }
+    );
 });
 
 router.get('/lead-enrichment', function(req, res, next) {
