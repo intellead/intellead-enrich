@@ -14,10 +14,10 @@ class LeadEnrichmentService {
                 }
             }
         );
-        this.email = email;
-        this.name = name;
-        this.company = company;
-        this.cnpj = cnpj;
+        this.email = "";
+        this.name = "";
+        this.company = "";
+        this.cnpj = "";
     }
 
     enrich(result){
