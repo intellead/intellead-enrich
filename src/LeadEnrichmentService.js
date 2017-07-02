@@ -27,7 +27,7 @@ class LeadEnrichmentService {
     enrichByReceitaWS() {
         console.log("_CNPJ: "+this._cnpj);
         if (this._cnpj) {
-            var queryReceitaws = 'https://receitaws-data.herokuapp.com/?cnpj='+this.cnpj;
+            var queryReceitaws = 'https://receitaws-data.herokuapp.com/?cnpj='+this._cnpj;
             request(queryReceitaws, function (error, response, body) {
                 console.log("REQUEST");
                 if (!error && response.statusCode == 200) {
