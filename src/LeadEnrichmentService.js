@@ -36,13 +36,15 @@ class LeadEnrichmentService {
 
     enrichByReceitaWS() {
         console.log("enrichByReceitaWS");
+        console.log("CNPJ: "+ this.cnpj);
         if (this.cnpj) {
             var queryReceitaws = 'https://receitaws-data.herokuapp.com/?cnpj='+this.cnpj;
             request(queryReceitaws, function (error, response, body) {
-                console.log("request");
+                console.log("REQUEST");
                 if (!error && response.statusCode == 200) {
+                    console.log("body: " + body);
                     var info = JSON.parse(body);
-                    console.log(info);
+                    console.log("info: " + info);
                     return info;
                     //ADD data to our database
                 }

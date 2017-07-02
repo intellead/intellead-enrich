@@ -32,8 +32,6 @@ app.use('/', router);
 // Route that receives a POST request to lead-enrichment/
 app.post('/lead-enrichment', function (req, res) {
     var lead_id = req.body.lead_id;
-    console.log("HERE");
-    console.log("lead_id: " + lead_id);
     var service = new LeadEnrichmentService(lead_id);
     service.enrich(function(result) {
         console.log("before send status: " + result);
