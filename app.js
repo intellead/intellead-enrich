@@ -5,10 +5,9 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
-var index = require('./routes/index');
-var users = require('./routes/users');
-
+var router = express.Router();
 var app = express();
+var LeadEnrichmentService = require('./src/LeadEnrichmentService');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -22,8 +21,34 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', index);
-app.use('/users', users);
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Cache-Control");
+    next();
+});
+
+app.use('/', router);
+
+// Route that receives a POST request to lead-enrichment/
+app.post('/lead-enrichment', function (req, res) {
+    console.log("HERE");
+    var email = req.body.email,
+        name = req.body.name,
+        company = req.body.company,
+        cnpj = req.body.cnpj;
+
+    console.log("email: " + email + "\nname: " + name + "\ncompany: " + company + "\ncnpj: " + cnpj);
+
+    var service = new LeadEnrichmentService(email, name, company, cnpj);
+    service.enrich(function(result) {
+        console.log("before send status: " + result);
+        res.status(200).send(result);
+    });
+});
+
+router.get('/lead-enrichment', function(req, res, next) {
+    res.sendStatus(200);
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
