@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 
 var router = express.Router();
 var app = express();
+var request = require('request');
 var LeadEnrichmentService = require('./src/LeadEnrichmentService');
 
 // view engine setup
