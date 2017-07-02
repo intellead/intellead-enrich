@@ -4,7 +4,16 @@ var request = require('request');
 
 class LeadEnrichmentService {
 
-    constructor(email, name, company, cnpj) {
+    constructor(lead_id) {
+        request.post(
+            'https://rdstation-webhook.herokuapp.com/lead-info',
+            { json: { lead_id: lead_id } },
+            function (error, response, body) {
+                if (!error && response.statusCode == 200) {
+                    console.log(body)
+                }
+            }
+        );
         this.email = email;
         this.name = name;
         this.company = company;
