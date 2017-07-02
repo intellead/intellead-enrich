@@ -34,7 +34,7 @@ app.post('/lead-enrichment', function (req, res) {
     var lead_id = req.body.lead_id;
     //var service = new LeadEnrichmentService(lead_id);
     var service = new LeadEnrichmentService(lead_id, function () {
-        this.enrich(function(result) {
+        service.enrich(function(result) {
             console.log("before send status: " + result);
             res.status(200).send(result);
         });
