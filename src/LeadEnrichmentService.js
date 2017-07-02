@@ -9,20 +9,15 @@ class LeadEnrichmentService {
             'https://rdstation-webhook.herokuapp.com/lead-info',
             { json: { lead_id: lead_id } },
             function (error, response, body) {
-                console.log("LEAD-INFO REQUEST");
-
-                console.log("ERROR: " + error);
-                console.log("RESPONSE: " + response);
-                console.log("BODY: " + body);
                 if (!error && response.statusCode == 200) {
-                    console.log("ID: " + body._id);
+                    this.email = body.email;
+                    this.name = body.name;
+                    this.company = body.company;
+                    this.cnpj = "04.724.734/0001-74";
                 }
             }
         );
-        this.email = "";
-        this.name = "";
-        this.company = "";
-        this.cnpj = "";
+
     }
 
     enrich(result){
