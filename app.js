@@ -42,7 +42,7 @@ app.post('/lead-enrichment', function (req, res) {
                 var name = body.name;
                 var company = body.company;
                 var cnpj;//body.cnpj;
-                var service = new LeadEnrichmentService(email, name, company, cnpj);
+                var service = new LeadEnrichmentService(lead_id, email, name, company, cnpj);
                 service.enrich(function(result) {
                     res.status(200).send(result);
                 });
