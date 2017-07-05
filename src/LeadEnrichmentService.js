@@ -30,9 +30,13 @@ class LeadEnrichmentService {
                     var info = JSON.parse(body);
                     var data = '?lead_id='+id+'&rich_information='+info;
                     console.log(data);
-                    request('https://rdstation-webhook.herokuapp.com/update-enriched-lead-information'+data, function (error, response, body) {
-                        return callback(response.statusCode);
-                    });
+                    request.post(
+                        'https://rdstation-webhook.herokuapp.com/update-enriched-lead-information',
+                        { json: { lead_id: id, rich_information: info } },
+                        function (error, response, body) {
+                            return callback(response.statusCode);
+                        }
+                    );
                 }
             });
         }
