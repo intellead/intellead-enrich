@@ -38,9 +38,9 @@ app.post('/lead-enrichment', function (req, res) {
         { json: { lead_id: lead_id } },
         function (error, response, body) {
             if (!error && response.statusCode == 200) {
-                var email = body.email;
-                var name = body.name;
-                var company = body.company;
+                var email = body.lead.email;
+                var name = body.lead.name;
+                var company = body.lead.company;
                 var cnpj;//body.cnpj;
                 console.log(body);
                 console.log(company);
