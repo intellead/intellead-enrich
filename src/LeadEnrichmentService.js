@@ -41,6 +41,7 @@ class LeadEnrichmentService {
     }
 
     enrichByReceitaWS(callback) {
+        var id = this._lead_id;
         console.log("CNPJ: "+this._cnpj);
         if (this._cnpj) {
             var queryReceitaws = 'https://receitaws-data.herokuapp.com/?cnpj='+this._cnpj;
