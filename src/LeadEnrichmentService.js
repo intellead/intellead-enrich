@@ -12,16 +12,12 @@ class LeadEnrichmentService {
     }
 
     enrich(callback){
-        this.enrichByQcnpjCrawler(function(result) {
-            return callback(result);
-        });
-
-        this.enrichByReceitaWS(function(result) {
-            return callback(result);
-        });
+        this.enrichByQcnpjCrawler();
+        this.enrichByReceitaWS();
+        return callback(200);
     }
 
-    enrichByQcnpjCrawler(callback) {
+    enrichByQcnpjCrawler() {
         var id = this._lead_id;
         if (this._company) {
             var queryQcnpjCrawler = 'https://qcnpj-crawler.herokuapp.com/?companyName='+this._company;
@@ -32,7 +28,9 @@ class LeadEnrichmentService {
                         'https://rdstation-webhook.herokuapp.com/update-enriched-lead-information',
                         { json: { lead_id: id, rich_information: info } },
                         function (error, response, body) {
-                            return callback(response.statusCode);
+                            if (error) {
+                                console.log(error);
+                            }
                         }
                     );
                 }
@@ -40,7 +38,7 @@ class LeadEnrichmentService {
         }
     }
 
-    enrichByReceitaWS(callback) {
+    enrichByReceitaWS() {
         var id = this._lead_id;
         console.log("CNPJ: "+this._cnpj);
         if (this._cnpj) {
@@ -56,7 +54,9 @@ class LeadEnrichmentService {
                         'https://rdstation-webhook.herokuapp.com/update-enriched-lead-information',
                         { json: { lead_id: id, rich_information: info } },
                         function (error, response, body) {
-                            return callback(response.statusCode);
+                            if (error) {
+                                console.log(error);
+                            }
                         }
                     );
                 }
