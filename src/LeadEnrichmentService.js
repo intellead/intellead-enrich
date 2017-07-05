@@ -28,8 +28,6 @@ class LeadEnrichmentService {
             request(queryQcnpjCrawler, function (error, response, body) {
                 if (!error && response.statusCode == 200) {
                     var info = JSON.parse(body);
-                    var data = '?lead_id='+id+'&rich_information='+info;
-                    console.log(data);
                     request.post(
                         'https://rdstation-webhook.herokuapp.com/update-enriched-lead-information',
                         { json: { lead_id: id, rich_information: info } },
@@ -48,8 +46,13 @@ class LeadEnrichmentService {
             request(queryReceitaws, function (error, response, body) {
                 if (!error && response.statusCode == 200) {
                     var info = JSON.parse(body);
-                    return callback(info);
-                    //ADD data to our database
+                    request.post(
+                        'https://rdstation-webhook.herokuapp.com/update-enriched-lead-information',
+                        { json: { lead_id: id, rich_information: info } },
+                        function (error, response, body) {
+                            return callback(response.statusCode);
+                        }
+                    );
                 }
             });
         }
