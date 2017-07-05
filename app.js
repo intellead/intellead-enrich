@@ -41,7 +41,7 @@ app.post('/lead-enrichment', function (req, res) {
                 var email = body.email;
                 var name = body.name;
                 var company = body.company;
-                var cnpj = "04.724.734/0001-74";
+                var cnpj;//body.cnpj;
                 var service = new LeadEnrichmentService(email, name, company, cnpj);
                 service.enrich(function(result) {
                     res.status(200).send(result);

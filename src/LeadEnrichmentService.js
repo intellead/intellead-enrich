@@ -18,22 +18,34 @@ class LeadEnrichmentService {
         if (this._name) {
 
         }
-        if (this._company) {
+        this.enrichByQcnpjCrawler(function(result) {
+            return callback(result);
+        });
 
-        }
         this.enrichByReceitaWS(function(result) {
             return callback(result);
         });
     }
 
+    enrichByQcnpjCrawler(callback) {
+        if (this._company) {
+            var queryQcnpjCrawler = 'https://qcnpj-crawler.herokuapp.com/?nomeDaEmpresa='+this._company;
+            request(queryQcnpjCrawler, function (error, response, body) {
+                if (!error && response.statusCode == 200) {
+                    var info = JSON.parse(body);
+                    return callback(info);
+                    //ADD data to our database
+                }
+            });
+        }
+    }
+
     enrichByReceitaWS(callback) {
         if (this._cnpj) {
-            var queryReceitaws = 'https://receitaws-data.herokuapp.com/?cnpj='+this._cnpj.toString();
+            var queryReceitaws = 'https://receitaws-data.herokuapp.com/?cnpj='+this._cnpj;
             request(queryReceitaws, function (error, response, body) {
                 if (!error && response.statusCode == 200) {
-                    console.log("body: " + body);
                     var info = JSON.parse(body);
-                    console.log("info: " + info);
                     return callback(info);
                     //ADD data to our database
                 }
