@@ -5,6 +5,7 @@ var request = require('request');
 class LeadEnrichmentService {
 
     constructor(lead_id, email, name, company, cnpj) {
+        console.log("Constructor: " + lead_id);
         this._lead_id = lead_id;
         this._email = email;
         this._name = name;
@@ -13,9 +14,7 @@ class LeadEnrichmentService {
     }
 
     enrich(callback){
-        console.log("HERE");
         this.enrichByQcnpjCrawler(function(result) {
-            console.log("HERE FINISH");
             return callback(result);
         });
 
@@ -25,14 +24,13 @@ class LeadEnrichmentService {
     }
 
     enrichByQcnpjCrawler(callback) {
-        console.log("HERE2");
-        console.log(this._company);
         if (this._company) {
             var queryQcnpjCrawler = 'https://qcnpj-crawler.herokuapp.com/?companyName='+this._company;
             request(queryQcnpjCrawler, function (error, response, body) {
                 if (!error && response.statusCode == 200) {
                     var info = JSON.parse(body);
                     console.log(info);
+                    console.log("this.lead_id: " + this.lead_id);
                     var data = '?lead_id='+this._lead_id+'&rich_information='+info;
                     console.log(data);
                     request('https://rdstation-webhook.herokuapp.com/update-enriched-lead-information'+data, function (error, response, body) {

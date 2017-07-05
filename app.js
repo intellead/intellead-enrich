@@ -42,8 +42,6 @@ app.post('/lead-enrichment', function (req, res) {
                 var name = body.lead.name;
                 var company = body.lead.company;
                 var cnpj;//body.cnpj;
-                console.log(body);
-                console.log(company);
                 var service = new LeadEnrichmentService(lead_id, email, name, company, cnpj);
                 service.enrich(function(result) {
                     res.status(200).send(result);
