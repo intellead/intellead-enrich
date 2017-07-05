@@ -42,8 +42,8 @@
       <file leaf-file-name="LeadEnrichmentService.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/LeadEnrichmentService.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="221">
-              <caret line="34" column="56" lean-forward="false" selection-start-line="34" selection-start-column="56" selection-end-line="34" selection-end-column="56" />
+            <state relative-caret-position="132">
+              <caret line="33" column="33" lean-forward="true" selection-start-line="33" selection-start-column="33" selection-end-line="33" selection-end-column="33" />
               <folding />
             </state>
           </provider>
@@ -61,9 +61,9 @@
   <component name="FindInProjectRecents">
     <findStrings>
       <find>console</find>
-      <find>consol</find>
       <find>conso</find>
       <find>lead_id</find>
+      <find>consol</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -269,12 +269,12 @@
       <option name="presentableId" value="Default" />
       <updated>1498953593649</updated>
       <workItem from="1498953595117" duration="9625000" />
-      <workItem from="1499231329633" duration="7211000" />
+      <workItem from="1499231329633" duration="7340000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="16836000" />
+    <option name="totallyTimeSpent" value="16965000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="0" width="1378" height="735" extended-state="0" />
@@ -370,8 +370,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/LeadEnrichmentService.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="34" column="56" lean-forward="false" selection-start-line="34" selection-start-column="56" selection-end-line="34" selection-end-column="56" />
+        <state relative-caret-position="132">
+          <caret line="33" column="33" lean-forward="true" selection-start-line="33" selection-start-column="33" selection-end-line="33" selection-end-column="33" />
           <folding />
         </state>
       </provider>
