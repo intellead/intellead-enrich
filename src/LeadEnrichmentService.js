@@ -34,8 +34,11 @@ class LeadEnrichmentService {
             request(queryQcnpjCrawler, function (error, response, body) {
                 if (!error && response.statusCode == 200) {
                     var info = JSON.parse(body);
-                    var data = '?lead_id='+lead_id+'&rich_information='+info;
+                    console.log(info);
+                    var data = '?lead_id='+this._lead_id+'&rich_information='+info;
+                    console.log(data);
                     request('https://rdstation-webhook.herokuapp.com/update-enriched-lead-information'+data, function (error, response, body) {
+                        console.log("STATUS:"+response.statusCode);
                         return callback(response.statusCode);
                     });
                 }
