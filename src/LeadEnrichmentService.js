@@ -10,15 +10,11 @@ class LeadEnrichmentService {
         this._name = name;
         this._company = company;
         this._cnpj = cnpj;
+        console.log("Construiu o LeadEnrichmentService");
     }
 
     enrich(callback){
-        if (this._email) {
-
-        }
-        if (this._name) {
-
-        }
+        console.log("HERE");
         this.enrichByQcnpjCrawler(function(result) {
             return callback(result);
         });
