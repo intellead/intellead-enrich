@@ -10,12 +10,12 @@ class LeadEnrichmentService {
         this._name = name;
         this._company = company;
         this._cnpj = cnpj;
-        console.log("Construiu o LeadEnrichmentService");
     }
 
     enrich(callback){
         console.log("HERE");
         this.enrichByQcnpjCrawler(function(result) {
+            console.log("HERE FINISH");
             return callback(result);
         });
 
@@ -25,6 +25,8 @@ class LeadEnrichmentService {
     }
 
     enrichByQcnpjCrawler(callback) {
+        console.log("HERE2");
+        console.log(this._company);
         if (this._company) {
             var queryQcnpjCrawler = 'https://qcnpj-crawler.herokuapp.com/?companyName='+this._company;
             request(queryQcnpjCrawler, function (error, response, body) {
