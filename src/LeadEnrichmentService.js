@@ -41,11 +41,16 @@ class LeadEnrichmentService {
     }
 
     enrichByReceitaWS(callback) {
+        console.log("CNPJ: "+this._cnpj);
         if (this._cnpj) {
             var queryReceitaws = 'https://receitaws-data.herokuapp.com/?cnpj='+this._cnpj;
+            console.log("here");
+            console.log(queryReceitaws);
             request(queryReceitaws, function (error, response, body) {
                 if (!error && response.statusCode == 200) {
+                    console.log("here2");
                     var info = JSON.parse(body);
+                    console.log(info);
                     request.post(
                         'https://rdstation-webhook.herokuapp.com/update-enriched-lead-information',
                         { json: { lead_id: id, rich_information: info } },
