@@ -1,11 +1,11 @@
 'use strict';
 
 var request = require('request');
-
+var lead_id;
 class LeadEnrichmentService {
 
     constructor(lead_id, email, name, company, cnpj) {
-        console.log("Constructor: " + lead_id);
+        lead_id = lead_id;
         this._id = lead_id;
         this._email = email;
         this._name = name;
@@ -30,6 +30,7 @@ class LeadEnrichmentService {
                 if (!error && response.statusCode == 200) {
                     var info = JSON.parse(body);
                     console.log(info);
+                    console.log("OUTRO:" + lead_id);
                     console.log("this._id: " + this._id);
                     var data = '?lead_id='+this._id+'&rich_information='+info;
                     console.log(data);
