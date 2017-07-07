@@ -12,17 +12,16 @@ class LeadEnrichmentService {
     }
 
     enrich(callback){
-        this.enrichByQcnpjCrawler();
+        this.enrichByQcnpjCrawler(this._lead_id, this._company);
         this.enrichByReceitaWS(this._lead_id, this._cnpj);
         return callback(200);
     }
 
-    enrichByQcnpjCrawler() {
-        var id = this._lead_id;
+    enrichByQcnpjCrawler(id, company_name) {
         console.log("[enrichByQcnpjCrawler]Entrou no enrichByQcnpjCrawler");
         console.log("[enrichByQcnpjCrawler]ID: " + id);
-        if (this._company) {
-            var queryQcnpjCrawler = 'https://qcnpj-crawler.herokuapp.com/?companyName='+this._company;
+        if (company_name) {
+            var queryQcnpjCrawler = 'https://qcnpj-crawler.herokuapp.com/?companyName='+company_name;
             request(queryQcnpjCrawler, function (error, response, body) {
                 if (!error && response.statusCode == 200) {
                     var info = JSON.parse(body);
