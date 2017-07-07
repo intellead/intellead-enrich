@@ -31,11 +31,10 @@ class LeadEnrichmentService {
                             if (error) {
                                 console.log(error);
                             }
-                            console.log("C: " + response.keys);
-                            // else if((this._cnpj == null || this._cnpj == undefined) && body.company.cnpj) {
-                            //     this._cnpj = body.company.cnpj;
-                            //     this.enrichByReceitaWS();
-                            // }
+                             else if((this._cnpj == null || this._cnpj == undefined) && info.cnpj) {
+                                 this._cnpj = body.company.cnpj;
+                                 this.enrichByReceitaWS();
+                             }
                         }
                     );
                 }
