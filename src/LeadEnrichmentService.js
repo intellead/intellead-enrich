@@ -24,7 +24,7 @@ class LeadEnrichmentService {
                 if (!error && response.statusCode == 200) {
                     var info = JSON.parse(body);
                     request.post(
-                        'https://rdstation-webhook.herokuapp.com/update-enriched-lead-information',
+                        'https://intellead-data.herokuapp.com/update-enriched-lead-information',
                         { json: { lead_id: id, rich_information: info } },
                         function (error, response, body) {
                             if (error) {
@@ -46,7 +46,7 @@ class LeadEnrichmentService {
                 if (!error && response.statusCode == 200) {
                     var info = JSON.parse(body);
                     request.post(
-                        'https://rdstation-webhook.herokuapp.com/update-enriched-lead-information',
+                        'https://intellead-data.herokuapp.com/update-enriched-lead-information',
                         { json: { lead_id: id, rich_information: info } },
                         function (error, response, body) {
                             if (error) {
