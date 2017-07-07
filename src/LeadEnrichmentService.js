@@ -30,6 +30,9 @@ class LeadEnrichmentService {
                         function (error, response, body) {
                             if (error) {
                                 console.log(error);
+                            } else if((this._cnpj == null || this._cnpj == undefined) && body.company.cnpj) {
+                                this._cnpj = body.company.cnpj;
+                                this.enrichByReceitaWS();
                             }
                         }
                     );
