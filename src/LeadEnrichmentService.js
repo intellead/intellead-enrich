@@ -13,7 +13,7 @@ class LeadEnrichmentService {
 
     enrich(callback){
         this.enrichByQcnpjCrawler();
-        this.enrichByReceitaWS();
+        this.enrichByReceitaWS(this._lead_id, this._cnpj);
         return callback(200);
     }
 
@@ -36,9 +36,8 @@ class LeadEnrichmentService {
                                 console.log(error);
                             } else if((this._cnpj == null || this._cnpj == undefined) && info.cnpj) {
                                 console.log("[enrichByQcnpjCrawler]Não tem CNPJ na base, mas já recuperou o CNPJ por esse crawler: " + info.cnpj);
-                                 this._cnpj = info.cnpj;
-                                console.log("[enrichByQcnpjCrawler]Agora tem _cnpj: " + this._cnpj);
-                                 new LeadEnrichmentService().enrichByReceitaWS();
+                                console.log("[enrichByQcnpjCrawler]Agora tem info.cnpj: " + info.cnpj);
+                                new LeadEnrichmentService().enrichByReceitaWS(id, info.cnpj);
                              }
                         }
                     );
@@ -47,13 +46,12 @@ class LeadEnrichmentService {
         }
     }
 
-    enrichByReceitaWS() {
+    enrichByReceitaWS(id, cnpj) {
         console.log("Entrou no enrichByReceitaWS");
-        var id = this._lead_id;
         console.log("[enrichByReceitaWS]ID: " + id);
-        console.log("[enrichByReceitaWS]_cnpj: " + this._cnpj);
-        if (this._cnpj) {
-            var queryReceitaws = 'https://receitaws-data.herokuapp.com/?cnpj='+this._cnpj;
+        console.log("[enrichByReceitaWS]_cnpj: " + cnpj);
+        if (cnpj) {
+            var queryReceitaws = 'https://receitaws-data.herokuapp.com/?cnpj='+cnpj;
             request(queryReceitaws, function (error, response, body) {
                 if (!error && response.statusCode == 200) {
                     var info = JSON.parse(body);
