@@ -32,7 +32,9 @@ class LeadEnrichmentService {
                                 console.log(error);
                             }
                             console.log("body: " + body);
-                            console.log("response: " + response);
+                            console.log("A: " + response.company.cnpj);
+                            console.log("B: " + response.Company.cnpj);
+                            console.log("C: " + response.cnpj);
                             // else if((this._cnpj == null || this._cnpj == undefined) && body.company.cnpj) {
                             //     this._cnpj = body.company.cnpj;
                             //     this.enrichByReceitaWS();
