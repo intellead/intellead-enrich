@@ -31,7 +31,8 @@ class LeadEnrichmentService {
                             if (error) {
                                 console.log(error);
                             }
-                            console.log(body);
+                            console.log("body: " + body);
+                            console.log("response: " + response);
                             // else if((this._cnpj == null || this._cnpj == undefined) && body.company.cnpj) {
                             //     this._cnpj = body.company.cnpj;
                             //     this.enrichByReceitaWS();
@@ -45,16 +46,11 @@ class LeadEnrichmentService {
 
     enrichByReceitaWS() {
         var id = this._lead_id;
-        console.log("CNPJ: "+this._cnpj);
         if (this._cnpj) {
             var queryReceitaws = 'https://receitaws-data.herokuapp.com/?cnpj='+this._cnpj;
-            console.log("here");
-            console.log(queryReceitaws);
             request(queryReceitaws, function (error, response, body) {
                 if (!error && response.statusCode == 200) {
-                    console.log("here2");
                     var info = JSON.parse(body);
-                    console.log(info);
                     request.post(
                         'https://rdstation-webhook.herokuapp.com/update-enriched-lead-information',
                         { json: { lead_id: id, rich_information: info } },
