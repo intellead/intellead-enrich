@@ -30,6 +30,7 @@ class LeadEnrichmentService {
                             if (error) {
                                 console.log(error);
                             } else if((this._cnpj == null || this._cnpj == undefined) && info.cnpj) {
+                                console.log('[QNCPJ]: '+response.statusCode);
                                 new LeadEnrichmentService().enrichByReceitaWS(id, info.cnpj);
                              }
                         }
@@ -52,6 +53,7 @@ class LeadEnrichmentService {
                             if (error) {
                                 console.log(error);
                             }
+                            console.log('[RECEITAWS]: '+response.statusCode);
                         }
                     );
                 }
