@@ -33,8 +33,6 @@ app.use('/', router);
 // Route that receives a POST request to lead-enrichment/
 app.post('/lead-enrichment', function (req, res) {
     var lead_id = req.body.lead_id;
-    console.log(req.body);
-    console.log('[LEAD_ID]: ' + lead_id);
     request.post(
         'https://intellead-data.herokuapp.com/lead-info',
         { json: { lead_id: lead_id } },
