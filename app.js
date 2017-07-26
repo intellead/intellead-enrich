@@ -44,7 +44,7 @@ var enrich_each_5_minutes = schedule.scheduleJob('*/1 * * * *', function(){
                 }
             }
             if (!error && response.statusCode == 200) {
-                var tens = body;
+                var itens = body;
                 console.log(itens);
                 for (var item in itens) {
                     var service = new LeadEnrichmentService(item.lead.lead_id, item.lead.email, item.lead.name, item.lead.company, item.lead.cnpj);
