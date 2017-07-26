@@ -44,7 +44,7 @@ var enrich_each_5_minutes = schedule.scheduleJob('*/1 * * * *', function(){
                 }
             }
             if (!error && response.statusCode == 200) {
-                console.log(itens);
+                var itens = body;
                 for (var item in itens) {
                     console.log(item);
                     console.log(item.lead);
