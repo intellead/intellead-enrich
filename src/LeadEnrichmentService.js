@@ -18,6 +18,7 @@ class LeadEnrichmentService {
     }
 
     enrichByQcnpjCrawler(id, company_name) {
+        console.log('C');
         if (company_name) {
             var queryQcnpjCrawler = 'https://qcnpj-crawler.herokuapp.com/?companyName='+company_name;
             request(queryQcnpjCrawler, function (error, response, body) {
