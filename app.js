@@ -30,7 +30,7 @@ app.use(function(req, res, next) {
 });
 
 var enrich_each_5_minutes = schedule.scheduleJob('*/1 * * * *', function(){
-    request.post(
+    request.get(
         'https://intellead-data.herokuapp.com/lead-to-enrich',
         { json: { enrichService: 'enrichByQcnpjCrawler' } },
         function (error, response, body) {
