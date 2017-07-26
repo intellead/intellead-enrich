@@ -18,8 +18,14 @@ class LeadEnrichmentService {
         return callback(200);
     }
 
-    enrichByQcnpjCrawler(id, company_name) {
+    enrichByQcnpjCrawlerAuto(item) {
+        enrichByQcnpjCrawler(item._id, item.lead.company);
+    }
+
+    enrichByQcnpjCrawler(item) {
         console.log('B');
+        var id = item._id;
+        var company_name = item.lead.company;
         if (company_name) {
             var queryQcnpjCrawler = 'https://qcnpj-crawler.herokuapp.com/?companyName='+company_name;
             request(queryQcnpjCrawler, function (error, response, body) {
@@ -43,7 +49,9 @@ class LeadEnrichmentService {
         }
     }
 
-    enrichByReceitaWS(id, cnpj) {
+    enrichByReceitaWS(item) {
+        var id = item._id;
+        var cnpj = item.lead.cnpj;
         if (cnpj) {
             var queryReceitaws = 'https://receitaws-data.herokuapp.com/?cnpj='+cnpj;
             request(queryReceitaws, function (error, response, body) {
