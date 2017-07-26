@@ -45,7 +45,7 @@ var enrich_each_5_minutes = schedule.scheduleJob('*/1 * * * *', function(){
                         var item = itens[index];
                         var service = new LeadEnrichmentService();
                         console.log('A');
-                        service[enrichment_method](item._id, item.lead.company);
+                        service['enrichByQcnpjCrawler'](item._id, item.lead.company);
                         console.log('C');
                         //service.enrichByQcnpjCrawler(item._id, item.lead.company);
                     }

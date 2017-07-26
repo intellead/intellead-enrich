@@ -1,6 +1,7 @@
 'use strict';
 
 var request = require('request');
+
 class LeadEnrichmentService {
 
     constructor(lead_id, email, name, company, cnpj) {
