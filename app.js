@@ -46,6 +46,7 @@ var enrich_each_5_minutes = schedule.scheduleJob('*/1 * * * *', function(){
             if (!error && response.statusCode == 200) {
                 console.log(body);
                 console.log('intellead-enrich auto Finished [OK]');
+
                 /*
                 var lead_id = req.body.lead_id;
                 var email = body.lead.email;
