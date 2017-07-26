@@ -37,7 +37,11 @@ var enrich_each_5_minutes = schedule.scheduleJob('*/1 * * * *', function(){
             console.log('intellead-enrich auto Started...');
             if (error || response.statusCode != 200) {
                 console.log('intellead-enrich auto Finished [ERROR]');
-                console.log(error);
+                if (error) {
+                    console.log(error);
+                } else {
+                    console.log(response);
+                }
             }
             if (!error && response.statusCode == 200) {
                 console.log(body);
