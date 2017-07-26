@@ -33,8 +33,9 @@ var enrichment_services = ['enrichByQcnpjCrawler', 'enrichByReceitaWS'];
 
 var enrich_each_5_minutes = schedule.scheduleJob('*/1 * * * *', function(){
     console.log('intellead-enrich auto Started...');
-    for (var index in enrichment_services) {
-        var enrichment_method = enrichment_services[index];
+    for (var indexOfEnrichmentServices in enrichment_services) {
+        var enrichment_method = enrichment_services[indexOfEnrichmentServices];
+        console.log('[METHOD]: ' + enrichment_method);
         request.get(
             'https://intellead-data.herokuapp.com/lead-to-enrich',
             { json: { enrichService: enrichment_method } },
