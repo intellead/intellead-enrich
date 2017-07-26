@@ -23,6 +23,7 @@ class LeadEnrichmentService {
             request(queryQcnpjCrawler, function (error, response, body) {
                 if (!error && response.statusCode == 200) {
                     var info = JSON.parse(body);
+                    info.enrichByQcnpjCrawler = true;
                     request.post(
                         'https://intellead-data.herokuapp.com/update-enriched-lead-information',
                         { json: { lead_id: id, rich_information: info } },
