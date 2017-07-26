@@ -33,7 +33,6 @@ var enrich_each_5_minutes = schedule.scheduleJob('*/5 * * * *', function(){
     var time = new Date();
     console.log('Schedule test: ' + time);
 });
-enrich_each_5_minutes.start();
 
 app.use('/', router);
 
