@@ -47,8 +47,8 @@ var enrich_each_5_minutes = schedule.scheduleJob('*/1 * * * *', function(){
                 var itens = body;
                 console.log(itens);
                 for (var item in itens) {
-                    var service = new LeadEnrichmentService(item.lead._id, item.lead.email, item.lead.name, item.lead.company, item.lead.cnpj);
-                    service.enrichByQcnpjCrawler(item.lead._id, item.lead.company);
+                    var service = new LeadEnrichmentService(item._id, item.lead.email, item.lead.name, item.lead.company, item.lead.cnpj);
+                    service.enrichByQcnpjCrawler(item._id, item.lead.company);
                 }
                 console.log('intellead-enrich auto Finished [OK]');
                 /*
