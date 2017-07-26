@@ -2,8 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ee05257f-2f39-4c25-92cc-bee688d585ac" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app.js" afterPath="$PROJECT_DIR$/app.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/LeadEnrichmentService.js" afterPath="$PROJECT_DIR$/src/LeadEnrichmentService.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -271,12 +269,12 @@
       <workItem from="1500794676674" duration="804000" />
       <workItem from="1500937779995" duration="5374000" />
       <workItem from="1501091579819" duration="1773000" />
-      <workItem from="1501098559356" duration="6951000" />
+      <workItem from="1501098559356" duration="6992000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="46581000" />
+    <option name="totallyTimeSpent" value="46622000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
