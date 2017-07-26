@@ -34,8 +34,12 @@ var enrich_each_5_minutes = schedule.scheduleJob('*/1 * * * *', function(){
         'https://intellead-data.herokuapp.com/lead-to-enrich',
         { json: { enrichService: 'enrichByQcnpjCrawler' } },
         function (error, response, body) {
+            console.log('intellead-enrich auto Started...');
+            if (error) {
+                console.log('intellead-enrich auto Finished [ERROR]');
+                console.log(error);
+            }
             if (!error && response.statusCode == 200) {
-                console.log('intellead-enrich auto Started...');
                 console.log(body);
                 console.log('intellead-enrich auto Finished [OK]');
                 /*
