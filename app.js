@@ -29,44 +29,37 @@ app.use(function(req, res, next) {
     next();
 });
 
+var enrichment_services = ['enrichByQcnpjCrawler', 'enrichByReceitaWS'];
+
 var enrich_each_5_minutes = schedule.scheduleJob('*/1 * * * *', function(){
-    request.get(
-        'https://intellead-data.herokuapp.com/lead-to-enrich',
-        { json: { enrichService: 'enrichByQcnpjCrawler' } },
-        function (error, response, body) {
-            console.log('intellead-enrich auto Started...');
-            if (error || response.statusCode != 200) {
-                console.log('intellead-enrich auto Finished [ERROR]');
-                if (error) {
-                    console.log(error);
-                } else {
-                    console.log(response);
+    console.log('intellead-enrich auto Started...');
+    for (var index in enrichment_services) {
+        var enrichment_method = enrichment_services[index];
+        request.get(
+            'https://intellead-data.herokuapp.com/lead-to-enrich',
+            { json: { enrichService: enrichment_method } },
+            function (error, response, body) {
+                if (!error && response.statusCode == 200) {
+                    var itens = body;
+                    for (var index in itens) {
+                        var item = itens[index];
+                        var service = new LeadEnrichmentService();
+                        service[enrichment_method](item._id, item.lead.company);
+                        //service.enrichByQcnpjCrawler(item._id, item.lead.company);
+                    }
+                }
+                if (error || response.statusCode != 200) {
+                    console.log('intellead-enrich auto Finished [ERROR]');
+                    if (error) {
+                        console.log(error);
+                    } else {
+                        console.log(response);
+                    }
                 }
             }
-            if (!error && response.statusCode == 200) {
-                var itens = body;
-                for (var index in itens) {
-                    var item = itens[index];
-                    console.log(item);
-                    console.log(item.lead);
-                    var service = new LeadEnrichmentService(item._id, item.lead.email, item.lead.name, item.lead.company, item.lead.cnpj);
-                    service.enrichByQcnpjCrawler(item._id, item.lead.company);
-                }
-                console.log('intellead-enrich auto Finished [OK]');
-                /*
-                var lead_id = req.body.lead_id;
-                var email = body.lead.email;
-                var name = body.lead.name;
-                var company = body.lead.company;
-                var cnpj = body.lead.cnpj;
-                var service = new LeadEnrichmentService(lead_id, email, name, company, cnpj);
-                service.enrich(function(result) {
-                    res.sendStatus(result);
-                });
-                */
-            }
-        }
-    );
+        );
+    }
+    console.log('intellead-enrich auto Finished [OK]');
 });
 
 app.use('/', router);
