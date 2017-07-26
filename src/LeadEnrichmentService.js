@@ -23,7 +23,7 @@ class LeadEnrichmentService {
     }
 
     enrichByQcnpjCrawler(item) {
-        console.log('B');
+        console.log('X');
         var id = item._id;
         var company_name = item.lead.company;
         if (company_name) {
@@ -50,6 +50,7 @@ class LeadEnrichmentService {
     }
 
     enrichByReceitaWS(item) {
+        console.log('Y');
         var id = item._id;
         var cnpj = item.lead.cnpj;
         if (cnpj) {
