@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 
 var router = express.Router();
 var app = express();
+var schedule = require('node-schedule');
 var request = require('request');
 var LeadEnrichmentService = require('./src/LeadEnrichmentService');
 
@@ -27,6 +28,12 @@ app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Cache-Control");
     next();
 });
+
+var enrich_each_5_minutes = schedule.scheduleJob('*/5 * * * *', function(){
+    var time = new Date();
+    console.log('Schedule test: ' + time);
+});
+enrich_each_5_minutes.start();
 
 app.use('/', router);
 
