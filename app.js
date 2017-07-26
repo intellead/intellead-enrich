@@ -29,9 +29,29 @@ app.use(function(req, res, next) {
     next();
 });
 
-var enrich_each_5_minutes = schedule.scheduleJob('*/5 * * * *', function(){
-    var time = new Date();
-    console.log('Schedule test: ' + time);
+var enrich_each_5_minutes = schedule.scheduleJob('*/1 * * * *', function(){
+    request.post(
+        'https://intellead-data.herokuapp.com/lead-to-enrich',
+        { json: { enrichService: 'enrichByQcnpjCrawler' } },
+        function (error, response, body) {
+            if (!error && response.statusCode == 200) {
+                console.log('intellead-enrich auto Started...');
+                console.log(body);
+                console.log('intellead-enrich auto Finished [OK]');
+                /*
+                var lead_id = req.body.lead_id;
+                var email = body.lead.email;
+                var name = body.lead.name;
+                var company = body.lead.company;
+                var cnpj = body.lead.cnpj;
+                var service = new LeadEnrichmentService(lead_id, email, name, company, cnpj);
+                service.enrich(function(result) {
+                    res.sendStatus(result);
+                });
+                */
+            }
+        }
+    );
 });
 
 app.use('/', router);
