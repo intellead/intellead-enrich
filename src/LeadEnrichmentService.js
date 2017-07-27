@@ -26,7 +26,6 @@ class LeadEnrichmentService {
     }
 
     enrichByQcnpjCrawler(item) {
-        console.log('X');
         var id = item._id;
         var company_name = item.lead.company;
         if (company_name) {
@@ -42,9 +41,9 @@ class LeadEnrichmentService {
                             if (error) {
                                 console.log(error);
                             } else if((this._cnpj == null || this._cnpj == undefined) && info.cnpj) {
-                                console.log('[QNCPJ]: '+response.statusCode);
+                                console.log('[enrichByQcnpjCrawler] Lead '+id+' enriched!');
                                 new LeadEnrichmentService().enrichByReceitaWS(id, info.cnpj);
-                             }
+                            }
                         }
                     );
                 }
@@ -53,7 +52,7 @@ class LeadEnrichmentService {
     }
 
     enrichByReceitaWS(item) {
-        console.log('Y');
+        var id = item._id;
         if (item.lead && item.lead.cnpj) {
             var queryReceitaws = 'https://receitaws-data.herokuapp.com/?cnpj='+item.lead.cnpj;
             request(queryReceitaws, function (error, response, body) {
@@ -61,12 +60,13 @@ class LeadEnrichmentService {
                     var info = JSON.parse(body);
                     request.post(
                         'https://intellead-data.herokuapp.com/update-enriched-lead-information',
-                        { json: { lead_id: item._id, rich_information: info } },
+                        { json: { lead_id: id, rich_information: info } },
                         function (error, response, body) {
                             if (error) {
                                 console.log(error);
+                            } else {
+                                console.log('[enrichByReceitaWS] Lead '+id+' enriched!');
                             }
-                            console.log('[RECEITAWS]: '+response.statusCode);
                         }
                     );
                 }
