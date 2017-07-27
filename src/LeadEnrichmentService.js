@@ -24,7 +24,7 @@ class LeadEnrichmentService {
 
     updateEnrichAttempts(serviceName, lead_id, attemps) {
         var qtEnrichmentAttempts = {
-            [serviceName] : (attemps ? (attemps+1): 1)
+            [serviceName] : attemps
         }
         request.post(
             'https://intellead-data.herokuapp.com/update-enrich-attempts',
