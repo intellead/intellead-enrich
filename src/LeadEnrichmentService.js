@@ -22,7 +22,7 @@ class LeadEnrichmentService {
         return callback(200);
     }
 
-    updateEnrichAttemps(serviceName, lead_id, attemps) {
+    updateEnrichAttempts(serviceName, lead_id, attemps) {
         var qtEnrichmentAttempts = {
             [serviceName] : (attemps ? (attemps+1): 1)
         }
@@ -54,7 +54,7 @@ class LeadEnrichmentService {
                             if (error) {
                                 console.log(error);
                             } else if((this._cnpj == null || this._cnpj == undefined) && info.cnpj) {
-                                this.updateEnrichAttemps('enrichByQcnpjCrawler', id, true);
+                                this.updateEnrichAttempts('enrichByQcnpjCrawler', id, true);
                                 console.log('[enrichByQcnpjCrawler] Lead '+id+' enriched!');
                                 item.lead.cnpj = info.cnpj;
                                 new LeadEnrichmentService().enrichByReceitaWS(item);
@@ -63,12 +63,12 @@ class LeadEnrichmentService {
                     );
                 } else {
                     var attempts = (item.lead.enrichByQcnpjCrawler ? (item.lead.enrichByQcnpjCrawler+1): 1);
-                    this.updateEnrichAttemps('enrichByQcnpjCrawler', id, attempts);
+                    this.updateEnrichAttempts('enrichByQcnpjCrawler', id, attempts);
                 }
             });
         } else {
             var attempts = (item.lead.enrichByQcnpjCrawler ? (item.lead.enrichByQcnpjCrawler+1): 1);
-            this.updateEnrichAttemps('enrichByQcnpjCrawler', id, attempts);
+            this.updateEnrichAttempts('enrichByQcnpjCrawler', id, attempts);
         }
     }
 
@@ -86,19 +86,19 @@ class LeadEnrichmentService {
                             if (error) {
                                 console.log(error);
                             } else {
-                                this.updateEnrichAttemps('enrichByReceitaWS', id, true);
+                                this.updateEnrichAttempts('enrichByReceitaWS', id, true);
                                 console.log('[enrichByReceitaWS] Lead '+id+' enriched!');
                             }
                         }
                     );
                 } else {
                     var attempts = (item.lead.enrichByReceitaWS ? (item.lead.enrichByReceitaWS+1): 1);
-                    this.updateEnrichAttemps('enrichByReceitaWS', id, attempts);
+                    this.updateEnrichAttempts('enrichByReceitaWS', id, attempts);
                 }
             });
         } else {
             var attempts = (item.lead.enrichByReceitaWS ? (item.lead.enrichByReceitaWS+1): 1);
-            this.updateEnrichAttemps('enrichByReceitaWS', id, attempts);
+            this.updateEnrichAttempts('enrichByReceitaWS', id, attempts);
         }
     }
 
