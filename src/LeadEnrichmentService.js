@@ -42,7 +42,8 @@ class LeadEnrichmentService {
                                 console.log(error);
                             } else if((this._cnpj == null || this._cnpj == undefined) && info.cnpj) {
                                 console.log('[enrichByQcnpjCrawler] Lead '+id+' enriched!');
-                                new LeadEnrichmentService().enrichByReceitaWS(id, info.cnpj);
+                                item.lead.cnpj = info.cnpj;
+                                new LeadEnrichmentService().enrichByReceitaWS(item);
                             }
                         }
                     );
@@ -58,6 +59,7 @@ class LeadEnrichmentService {
             request(queryReceitaws, function (error, response, body) {
                 if (!error && response.statusCode == 200) {
                     var info = JSON.parse(body);
+                    info.enrichByReceitaWS = true;
                     request.post(
                         'https://intellead-data.herokuapp.com/update-enriched-lead-information',
                         { json: { lead_id: id, rich_information: info } },
