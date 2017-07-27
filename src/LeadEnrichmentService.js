@@ -48,14 +48,12 @@ class LeadEnrichmentService {
                         }
                     );
                 } else {
-                    console.log('QTD ATUAL: ' + item.lead.enrichByQcnpjCrawler)
                     var qtEnrichmentAttempts = {
                         'enrichByQcnpjCrawler' : (item.lead.enrichByQcnpjCrawler ? (item.lead.enrichByQcnpjCrawler+1) : 1)
                     }
-                    console.log(qtEnrichmentAttempts);
                     request.post(
-                        'https://intellead-data.herokuapp.com/update-enriched-lead-information',
-                        { json: { lead_id: id, rich_information: qtEnrichmentAttempts } },
+                        'https://intellead-data.herokuapp.com/update-enrich-attempts',
+                        { json: { lead_id: id, attempts: qtEnrichmentAttempts } },
                         function (error, response, body) {
                             if (error) {
                                 console.log(error);
@@ -88,11 +86,11 @@ class LeadEnrichmentService {
                     );
                 } else {
                     var qtEnrichmentAttempts = {
-                        'enrichByReceitaWS' : (item.lead.enrichByReceitaWS ? item.lead.enrichByReceitaWS+1: 1)
+                        'enrichByReceitaWS' : (item.lead.enrichByReceitaWS ? (item.lead.enrichByReceitaWS+1): 1)
                     }
                     request.post(
-                        'https://intellead-data.herokuapp.com/update-enriched-lead-information',
-                        { json: { lead_id: id, rich_information: qtEnrichmentAttempts } },
+                        'https://intellead-data.herokuapp.com/update-enrich-attempts',
+                        { json: { lead_id: id, attempts: qtEnrichmentAttempts } },
                         function (error, response, body) {
                             if (error) {
                                 console.log(error);
