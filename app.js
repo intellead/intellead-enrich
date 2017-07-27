@@ -29,7 +29,7 @@ app.use(function(req, res, next) {
     next();
 });
 
-var enrichment_services = ['enrichByQcnpjCrawler', 'enrichByReceitaWS'];
+var enrichment_services = ['enrichByReceitaWS', 'enrichByQcnpjCrawler'];
 
 var enrich_each_5_minutes = schedule.scheduleJob('*/1 * * * *', function(){
     console.log('intellead-enrich auto Started...');
