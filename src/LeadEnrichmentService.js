@@ -22,7 +22,6 @@ class LeadEnrichmentService {
             request(queryQcnpjCrawler, function (error, response, body) {
                 if (!error && response.statusCode == 200) {
                     var info = JSON.parse(body);
-                    info.enrichByQcnpjCrawler = true;
                     request.post(
                         'https://intellead-data.herokuapp.com/update-enriched-lead-information',
                         { json: { lead_id: id, rich_information: info } },
@@ -30,6 +29,7 @@ class LeadEnrichmentService {
                             if (error) {
                                 console.log(error);
                             } else if((this._cnpj == null || this._cnpj == undefined) && info.cnpj) {
+                                this.updateEnrichAttemps('enrichByQcnpjCrawler', id, true);
                                 console.log('[enrichByQcnpjCrawler] Lead '+id+' enriched!');
                                 item.lead.cnpj = info.cnpj;
                                 new LeadEnrichmentService().enrichByReceitaWS(item);
@@ -37,11 +37,13 @@ class LeadEnrichmentService {
                         }
                     );
                 } else {
-                    this.updateEnrichAttemps('enrichByQcnpjCrawler', id, item.lead.enrichByQcnpjCrawler);
+                    var attempts = (item.lead.enrichByQcnpjCrawler ? (item.lead.enrichByQcnpjCrawler+1): 1);
+                    this.updateEnrichAttemps('enrichByQcnpjCrawler', id, attempts);
                 }
             });
         } else {
-            this.updateEnrichAttemps('enrichByQcnpjCrawler', id, item.lead.enrichByQcnpjCrawler);
+            var attempts = (item.lead.enrichByQcnpjCrawler ? (item.lead.enrichByQcnpjCrawler+1): 1);
+            this.updateEnrichAttemps('enrichByQcnpjCrawler', id, attempts);
         }
     }
 
@@ -52,7 +54,6 @@ class LeadEnrichmentService {
             request(queryReceitaws, function (error, response, body) {
                 if (!error && response.statusCode == 200) {
                     var info = JSON.parse(body);
-                    info.enrichByReceitaWS = true;
                     request.post(
                         'https://intellead-data.herokuapp.com/update-enriched-lead-information',
                         { json: { lead_id: id, rich_information: info } },
@@ -60,15 +61,18 @@ class LeadEnrichmentService {
                             if (error) {
                                 console.log(error);
                             } else {
+                                this.updateEnrichAttemps('enrichByReceitaWS', id, true);
                                 console.log('[enrichByReceitaWS] Lead '+id+' enriched!');
                             }
                         }
                     );
                 } else {
-                    this.updateEnrichAttemps('enrichByReceitaWS', id, item.lead.enrichByReceitaWS);
+                    var attempts = (item.lead.enrichByReceitaWS ? (item.lead.enrichByReceitaWS+1): 1);
+                    this.updateEnrichAttemps('enrichByReceitaWS', id, attempts);
                 }
             });
         } else {
+            var attempts = (item.lead.enrichByReceitaWS ? (item.lead.enrichByReceitaWS+1): 1);
             this.updateEnrichAttemps('enrichByReceitaWS', id, item.lead.enrichByReceitaWS);
         }
     }
