@@ -47,6 +47,19 @@ class LeadEnrichmentService {
                             }
                         }
                     );
+                } else {
+                    var qtEnrichmentAttempts = {
+                        'enrichByQcnpjCrawler' : (item.lead.enrichByQcnpjCrawler ? item.lead.enrichByQcnpjCrawler+1: 1)
+                    }
+                    request.post(
+                        'https://intellead-data.herokuapp.com/update-enriched-lead-information',
+                        { json: { lead_id: id, rich_information: qtEnrichmentAttempts } },
+                        function (error, response, body) {
+                            if (error) {
+                                console.log(error);
+                            }
+                        }
+                    );
                 }
             });
         }
@@ -68,6 +81,19 @@ class LeadEnrichmentService {
                                 console.log(error);
                             } else {
                                 console.log('[enrichByReceitaWS] Lead '+id+' enriched!');
+                            }
+                        }
+                    );
+                } else {
+                    var qtEnrichmentAttempts = {
+                        'enrichByReceitaWS' : (item.lead.enrichByReceitaWS ? item.lead.enrichByReceitaWS+1: 1)
+                    }
+                    request.post(
+                        'https://intellead-data.herokuapp.com/update-enriched-lead-information',
+                        { json: { lead_id: id, rich_information: qtEnrichmentAttempts } },
+                        function (error, response, body) {
+                            if (error) {
+                                console.log(error);
                             }
                         }
                     );
