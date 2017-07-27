@@ -18,10 +18,6 @@ class LeadEnrichmentService {
         return callback(200);
     }
 
-    enrichByQcnpjCrawlerAuto(item) {
-        enrichByQcnpjCrawler(item._id, item.lead.company);
-    }
-
     enrichByQcnpjCrawler(item) {
         console.log('X');
         var id = item._id;
