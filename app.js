@@ -42,6 +42,7 @@ var enrich_each_5_minutes = schedule.scheduleJob('*/1 * * * *', function(){
             function (error, response, body) {
                 if (!error && response.statusCode == 200) {
                     var itens = body;
+                    console.log('[ITENS RETORNADOS]: ' + itens.length);
                     for (var index in itens) {
                         var item = itens[index];
                         var service = new LeadEnrichmentService();

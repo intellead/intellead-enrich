@@ -13,8 +13,15 @@ class LeadEnrichmentService {
     }
 
     enrich(callback){
-        this.enrichByQcnpjCrawler(this._lead_id, this._company);
-        this.enrichByReceitaWS(this._lead_id, this._cnpj);
+        var item = {
+            _id: this._lead_id,
+            lead : {
+                company: this._company,
+                cnpj: this._cnpj
+            }
+        }
+        this.enrichByQcnpjCrawler(item);
+        this.enrichByReceitaWS(item);
         return callback(200);
     }
 
