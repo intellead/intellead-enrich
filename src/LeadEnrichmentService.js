@@ -54,18 +54,14 @@ class LeadEnrichmentService {
 
     enrichByReceitaWS(item) {
         console.log('Y');
-        var id = item._id;
-        console.log(item.lead);
-        console.log(item.lead.cnpj);
-        var cnpj = item.lead.cnpj;
-        if (cnpj) {
-            var queryReceitaws = 'https://receitaws-data.herokuapp.com/?cnpj='+cnpj;
+        if (item.lead && item.lead.cnpj) {
+            var queryReceitaws = 'https://receitaws-data.herokuapp.com/?cnpj='+item.lead.cnpj;
             request(queryReceitaws, function (error, response, body) {
                 if (!error && response.statusCode == 200) {
                     var info = JSON.parse(body);
                     request.post(
                         'https://intellead-data.herokuapp.com/update-enriched-lead-information',
-                        { json: { lead_id: id, rich_information: info } },
+                        { json: { lead_id: item._id, rich_information: info } },
                         function (error, response, body) {
                             if (error) {
                                 console.log(error);

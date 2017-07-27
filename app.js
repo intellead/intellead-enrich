@@ -34,7 +34,6 @@ var enrichment_services = ['enrichByQcnpjCrawler', 'enrichByReceitaWS'];
 var enrich_each_5_minutes = schedule.scheduleJob('*/1 * * * *', function(){
     console.log('[intellead-enrich] Started...');
     for (var indexOfEnrichmentServices in enrichment_services) {
-
         (function() {
             var index = indexOfEnrichmentServices;
             process.nextTick(function() {
@@ -61,8 +60,6 @@ var enrich_each_5_minutes = schedule.scheduleJob('*/1 * * * *', function(){
                         }
                     }
                 );
-
-
             });
         })();
     }
