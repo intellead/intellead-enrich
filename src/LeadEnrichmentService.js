@@ -37,11 +37,11 @@ class LeadEnrichmentService {
                         }
                     );
                 } else {
-                    this.updateEnrichAttemps('enrichByQcnpjCrawler', item.lead.enrichByQcnpjCrawler);
+                    this.updateEnrichAttemps('enrichByQcnpjCrawler', id, item.lead.enrichByQcnpjCrawler);
                 }
             });
         } else {
-            this.updateEnrichAttemps('enrichByQcnpjCrawler', item.lead.enrichByQcnpjCrawler);
+            this.updateEnrichAttemps('enrichByQcnpjCrawler', id, item.lead.enrichByQcnpjCrawler);
         }
     }
 
@@ -65,11 +65,11 @@ class LeadEnrichmentService {
                         }
                     );
                 } else {
-                    this.updateEnrichAttemps('enrichByReceitaWS', item.lead.enrichByReceitaWS);
+                    this.updateEnrichAttemps('enrichByReceitaWS', id, item.lead.enrichByReceitaWS);
                 }
             });
         } else {
-            this.updateEnrichAttemps('enrichByReceitaWS', item.lead.enrichByReceitaWS);
+            this.updateEnrichAttemps('enrichByReceitaWS', id, item.lead.enrichByReceitaWS);
         }
     }
 
@@ -88,13 +88,13 @@ class LeadEnrichmentService {
         return callback(200);
     }
 
-    updateEnrichAttemps(serviceName, value) {
+    updateEnrichAttemps(serviceName, lead_id, attemps) {
         var qtEnrichmentAttempts = {
-            [serviceName] : (value ? (value+1): 1)
+            [serviceName] : (attemps ? (attemps+1): 1)
         }
         request.post(
             'https://intellead-data.herokuapp.com/update-enrich-attempts',
-            { json: { lead_id: id, attempts: qtEnrichmentAttempts } },
+            { json: { lead_id: lead_id, attempts: qtEnrichmentAttempts } },
             function (error, response, body) {
                 if (error) {
                     console.log(error);
