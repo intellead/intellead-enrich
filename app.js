@@ -29,10 +29,9 @@ app.use(function(req, res, next) {
     next();
 });
 
-var enrichment_services = ['enrichByQcnpjCrawler', 'enrichByReceitaWS'];
 
 var enrich_each_5_minutes = schedule.scheduleJob('*/1 * * * *', function(){
-    console.log('[intellead-enrich] Started...');
+    var enrichment_services = ['enrichByQcnpjCrawler', 'enrichByReceitaWS'];
     for (var indexOfEnrichmentServices in enrichment_services) {
         (function() {
             var index = indexOfEnrichmentServices;
@@ -63,7 +62,6 @@ var enrich_each_5_minutes = schedule.scheduleJob('*/1 * * * *', function(){
             });
         })();
     }
-    console.log('[intellead-enrich] Finished [OK]');
 });
 
 app.use('/', router);
