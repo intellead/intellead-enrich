@@ -7,6 +7,36 @@ class LeadEnrichmentService {
     constructor() {
     }
 
+    /*---------------- UTILS ----------------*/
+
+    enrichLeadWithAllServices(lead_id, company, cnpj, callback){
+        var item = {
+            '_id': lead_id,
+            'lead' : {
+                'company': company,
+                'cnpj': cnpj
+            }
+        }
+        this.enrichByQcnpjCrawler(item);
+        this.enrichByReceitaWS(item);
+        return callback(200);
+    }
+
+    updateEnrichAttemps(serviceName, lead_id, attemps) {
+        var qtEnrichmentAttempts = {
+            [serviceName] : (attemps ? (attemps+1): 1)
+        }
+        request.post(
+            'https://intellead-data.herokuapp.com/update-enrich-attempts',
+            { json: { lead_id: lead_id, attempts: qtEnrichmentAttempts } },
+            function (error, response, body) {
+                if (error) {
+                    console.log(error);
+                }
+            }
+        );
+    }
+
     /*---------------- SERVICES ----------------*/
 
     enrichByQcnpjCrawler(item) {
@@ -72,35 +102,7 @@ class LeadEnrichmentService {
         }
     }
 
-    /*---------------- UTILS ----------------*/
 
-    enrichLeadWithAllServices(lead_id, company, cnpj, callback){
-        var item = {
-            '_id': lead_id,
-            'lead' : {
-                'company': company,
-                'cnpj': cnpj
-            }
-        }
-        this.enrichByQcnpjCrawler(item);
-        this.enrichByReceitaWS(item);
-        return callback(200);
-    }
-
-    updateEnrichAttemps(serviceName, lead_id, attemps) {
-        var qtEnrichmentAttempts = {
-            [serviceName] : (attemps ? (attemps+1): 1)
-        }
-        request.post(
-            'https://intellead-data.herokuapp.com/update-enrich-attempts',
-            { json: { lead_id: lead_id, attempts: qtEnrichmentAttempts } },
-            function (error, response, body) {
-                if (error) {
-                    console.log(error);
-                }
-            }
-        );
-    }
 
 
 }
