@@ -78,8 +78,8 @@ intellead-enrich uses node-schedule to automate the enrichment service.
 Each 5 minutes intellead-enrich ask to intellead-data if exists leads not enriched, if it exists, it will enrich these.
 Each enriched service has a signature (which is the name of the service) that marks the lead if it has already been enriched by the service, if so, the lead is ignored and no longer needs to be enriched by it.
 If any service can not enrich the lead, it uses this signature to mark how many times it has tried to enrich the lead.
-Each service has a limit of 5 enrichment attempts per lead.
-The lead that is not enriched up to 5 times, should wait for a new lead conversion to try again.
+Each service has a limit of 2 enrichment attempts per lead.
+The lead that is not enriched up to 2 times, should wait for a new lead conversion to try again.
 
 <h3>Copyrights and Licence</h3>
 TO DO
