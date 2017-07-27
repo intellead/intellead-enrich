@@ -73,12 +73,10 @@ app.post('/lead-enrichment', function (req, res) {
         { json: { lead_id: lead_id } },
         function (error, response, body) {
             if (!error && response.statusCode == 200) {
-                var email = body.lead.email;
-                var name = body.lead.name;
+                var service = new LeadEnrichmentService();
                 var company = body.lead.company;
                 var cnpj = body.lead.cnpj;
-                var service = new LeadEnrichmentService(lead_id, email, name, company, cnpj);
-                service.enrichLeadWithAllServices(function(result) {
+                service.enrichLeadWithAllServices(lead_id, company, cnpj, function(result) {
                     res.sendStatus(result);
                 });
             }

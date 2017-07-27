@@ -4,12 +4,7 @@ var request = require('request');
 
 class LeadEnrichmentService {
 
-    constructor(lead_id, email, name, company, cnpj) {
-        this._lead_id = lead_id;
-        this._email = email;
-        this._name = name;
-        this._company = company;
-        this._cnpj = cnpj;
+    constructor() {
     }
 
     /*---------------- SERVICES ----------------*/
@@ -73,18 +68,18 @@ class LeadEnrichmentService {
             });
         } else {
             var attempts = (item.lead.enrichByReceitaWS ? (item.lead.enrichByReceitaWS+1): 1);
-            this.updateEnrichAttemps('enrichByReceitaWS', id, item.lead.enrichByReceitaWS);
+            this.updateEnrichAttemps('enrichByReceitaWS', id, attempts);
         }
     }
 
     /*---------------- UTILS ----------------*/
 
-    enrichLeadWithAllServices(callback){
+    enrichLeadWithAllServices(lead_id, company, cnpj, callback){
         var item = {
-            '_id': this._lead_id,
+            '_id': lead_id,
             'lead' : {
-                'company': this._company,
-                'cnpj': this._cnpj
+                'company': company,
+                'cnpj': cnpj
             }
         }
         this.enrichByQcnpjCrawler(item);
