@@ -48,9 +48,11 @@ class LeadEnrichmentService {
                         }
                     );
                 } else {
+                    console.log('QTD ATUAL: ' + item.lead.enrichByQcnpjCrawler)
                     var qtEnrichmentAttempts = {
-                        'enrichByQcnpjCrawler' : (item.lead.enrichByQcnpjCrawler ? item.lead.enrichByQcnpjCrawler+1: 1)
+                        'enrichByQcnpjCrawler' : (item.lead.enrichByQcnpjCrawler ? (item.lead.enrichByQcnpjCrawler+1) : 1)
                     }
+                    console.log(qtEnrichmentAttempts);
                     request.post(
                         'https://intellead-data.herokuapp.com/update-enriched-lead-information',
                         { json: { lead_id: id, rich_information: qtEnrichmentAttempts } },
