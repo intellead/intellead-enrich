@@ -29,41 +29,44 @@ app.use(function(req, res, next) {
     next();
 });
 
-var enrichment_services = ['enrichByReceitaWS', 'enrichByQcnpjCrawler'];
+var enrichment_services = ['enrichByQcnpjCrawler', 'enrichByReceitaWS'];
 
 var enrich_each_5_minutes = schedule.scheduleJob('*/1 * * * *', function(){
-    console.log('intellead-enrich auto Started...');
+    console.log('[intellead-enrich] Started...');
     for (var indexOfEnrichmentServices in enrichment_services) {
-        var enrichment_method = enrichment_services[indexOfEnrichmentServices];
-        console.log('[METHOD]: ' + enrichment_method);
-        request.get(
-            'https://intellead-data.herokuapp.com/lead-to-enrich',
-            { json: { enrichService: enrichment_method } },
-            function (error, response, body) {
-                if (!error && response.statusCode == 200) {
-                    var itens = body;
-                    console.log('[ITENS RETORNADOS]: ' + itens.length);
-                    for (var index in itens) {
-                        var item = itens[index];
-                        var service = new LeadEnrichmentService();
-                        console.log('A');
-                        console.log(enrichment_method);
-                        service[enrichment_method](item);
-                        console.log('C');
+
+        (function() {
+            var index = indexOfEnrichmentServices;
+            process.nextTick(function() {
+                var enrichment_method = enrichment_services[index];
+                request.get(
+                    'https://intellead-data.herokuapp.com/lead-to-enrich',
+                    { json: { enrichService: enrichment_method } },
+                    function (error, response, body) {
+                        if (!error && response.statusCode == 200) {
+                            var itens = body;
+                            for (var index in itens) {
+                                var item = itens[index];
+                                var service = new LeadEnrichmentService();
+                                service[enrichment_method](item);
+                            }
+                        }
+                        if (error || response.statusCode != 200) {
+                            console.log('[intellead-enrich] Finished [ERROR]');
+                            if (error) {
+                                console.log(error);
+                            } else {
+                                console.log(response);
+                            }
+                        }
                     }
-                }
-                if (error || response.statusCode != 200) {
-                    console.log('intellead-enrich auto Finished [ERROR]');
-                    if (error) {
-                        console.log(error);
-                    } else {
-                        console.log(response);
-                    }
-                }
-            }
-        );
+                );
+
+
+            });
+        })();
     }
-    console.log('intellead-enrich auto Finished [OK]');
+    console.log('[intellead-enrich] Finished [OK]');
 });
 
 app.use('/', router);

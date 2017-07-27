@@ -14,10 +14,10 @@ class LeadEnrichmentService {
 
     enrich(callback){
         var item = {
-            _id: this._lead_id,
-            lead : {
-                company: this._company,
-                cnpj: this._cnpj
+           '_id': this._lead_id,
+            'lead' : {
+                'company': this._company,
+                'cnpj': this._cnpj
             }
         }
         this.enrichByQcnpjCrawler(item);
