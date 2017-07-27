@@ -30,7 +30,7 @@ app.use(function(req, res, next) {
 });
 
 
-var enrich_each_5_minutes = schedule.scheduleJob('*/1 * * * *', function(){
+var enrich_each_5_minutes = schedule.scheduleJob('*/5 * * * *', function(){
     var enrichment_services = ['enrichByQcnpjCrawler', 'enrichByReceitaWS'];
     for (var indexOfEnrichmentServices in enrichment_services) {
         (function() {
@@ -65,8 +65,7 @@ var enrich_each_5_minutes = schedule.scheduleJob('*/1 * * * *', function(){
 
 app.use('/', router);
 
-// Route that receives a POST request to lead-enrichment/
-app.post('/lead-enrichment', function (req, res) {
+app.post('/lead-enrichment-by-id', function (req, res) {
     var lead_id = req.body.lead_id;
     request.post(
         'https://intellead-data.herokuapp.com/lead-info',
@@ -84,7 +83,7 @@ app.post('/lead-enrichment', function (req, res) {
     );
 });
 
-router.get('/lead-enrichment', function(req, res, next) {
+router.get('/lead-enrichment-by-id', function(req, res, next) {
     res.sendStatus(200);
 });
 

@@ -60,7 +60,7 @@ We can call the API like this:
 var lead_id = $('#lead_id').val();
 $.ajax({
     "crossDomain": true,
-    "url": https://your_domain.com/lead-enrichment,
+    "url": https://your_domain.com/lead-enrichment-by-id,
     "method": "POST",
     "headers": {
         "content-type": "application/x-www-form-urlencoded",
