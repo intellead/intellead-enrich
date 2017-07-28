@@ -70,7 +70,7 @@ app.post('/lead-enrichment', function (req, res) {
     var lead_id = lead._id;
     var company = lead.company;
     var cnpj = lead.cnpj;
-    console.log("LEAD_ID: " + lead_id + " | COMPANY: " + company + " | CNPJ: " + cnpj);
+    console.log("[lead-enrichment] LEAD_ID: " + lead_id + " | COMPANY: " + company + " | CNPJ: " + cnpj);
     new LeadEnrichmentService().enrichLeadWithAllServices(lead_id, company, cnpj, function(result) {
         res.sendStatus(result);
     });

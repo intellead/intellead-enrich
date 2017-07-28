@@ -12,6 +12,7 @@ class LeadEnrichmentService {
     enrichByQcnpjCrawler(item) {
         var id = item._id;
         var company_name = item.lead.company;
+        console.log("[enrichByQcnpjCrawler] LEAD_ID: " + id + " | COMPANY: " + company_name);
         if (company_name) {
             var queryQcnpjCrawler = 'https://qcnpj-crawler.herokuapp.com/?companyName='+company_name;
             request(queryQcnpjCrawler, function (error, response, body) {
@@ -75,13 +76,15 @@ class LeadEnrichmentService {
     /*---------------- UTILS ----------------*/
 
     enrichLeadWithAllServices(lead_id, company, cnpj, callback){
+        console.log("[enrichLeadWithAllServices] LEAD_ID: " + lead_id + " | COMPANY: " + company + " | CNPJ: " + cnpj);
         var item = {
             '_id': lead_id,
             'lead' : {
                 'company': company,
                 'cnpj': cnpj
             }
-        }
+        };
+        console.log(item);
         this.enrichByQcnpjCrawler(item);
         this.enrichByReceitaWS(item);
         return callback(200);
