@@ -66,20 +66,11 @@ app.use(function(req, res, next) {
 app.use('/', router);
 
 app.post('/lead-enrichment', function (req, res) {
-    console.log("[lead-enrichment] ENTROU");
-    var item = req.body.item;
-    console.log("Item: " + item);
-    var lead_id = item._id;
-    console.log("lead_id: " + lead_id);
-    var company = item.company;
-    console.log("company: " + company);
-    var cnpj = item.cnpj;
-    console.log("cnpj: " + cnpj);
-    console.log("COMECOU O ENRIQUECIMENTO DO LEAD: " + lead_id);
+    var lead = req.body.lead;
+    var lead_id = lead._id;
+    var company = lead.company;
+    var cnpj = lead.cnpj;
     new LeadEnrichmentService().enrichLeadWithAllServices(lead_id, company, cnpj, function(result) {
-        if (result == 200) {
-            console.log("FINALIZOU O ENRIQUECIMENTO DO LEAD: " + lead_id);
-        }
         res.sendStatus(result);
     });
 });
