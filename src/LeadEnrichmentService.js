@@ -2,11 +2,10 @@
 
 var request = require('request');
 
-var enrichmentServicesReady = [];
-
 class LeadEnrichmentService {
 
     constructor() {
+        this.enrichmentServicesReady = [];
     }
 
     /*---------------- SERVICES ----------------*/
