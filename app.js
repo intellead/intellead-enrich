@@ -65,6 +65,16 @@ var enrich_each_5_minutes = schedule.scheduleJob('*/5 * * * *', function(){
 
 app.use('/', router);
 
+app.post('/lead-enrichment', function (req, res) {
+    var item = req.body.item;
+    var lead_id = item._id;
+    var company = item.lead.company;
+    var cnpj = item.lead.cnpj;
+    new LeadEnrichmentService().enrichLeadWithAllServices(lead_id, company, cnpj, function(result) {
+        res.sendStatus(result);
+    });
+});
+
 app.post('/lead-enrichment-by-id', function (req, res) {
     var lead_id = req.body.lead_id;
     request.post(
