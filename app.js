@@ -29,39 +29,39 @@ app.use(function(req, res, next) {
     next();
 });
 
-
-var enrich_each_5_minutes = schedule.scheduleJob('*/5 * * * *', function(){
-    var enrichment_services = ['enrichByQcnpjCrawler', 'enrichByReceitaWS'];
-    for (var indexOfEnrichmentServices in enrichment_services) {
-        (function() {
-            var index = indexOfEnrichmentServices;
-            process.nextTick(function() {
-                var enrichment_method = enrichment_services[index];
-                request.get(
-                    'https://intellead-data.herokuapp.com/lead-to-enrich',
-                    { json: { enrichService: enrichment_method } },
-                    function (error, response, body) {
-                        if (!error && response.statusCode == 200) {
-                            var itens = body;
-                            for (var index in itens) {
-                                var item = itens[index];
-                                var service = new LeadEnrichmentService();
-                                service[enrichment_method](item);
-                            }
-                        }
-                        if (error || response.statusCode != 200) {
-                            if (error) {
-                                console.log(error);
-                            } else {
-                                console.log(response);
-                            }
-                        }
-                    }
-                );
-            });
-        })();
-    }
-});
+//
+// var enrich_each_5_minutes = schedule.scheduleJob('*/5 * * * *', function(){
+//     var enrichment_services = ['enrichByQcnpjCrawler', 'enrichByReceitaWS'];
+//     for (var indexOfEnrichmentServices in enrichment_services) {
+//         (function() {
+//             var index = indexOfEnrichmentServices;
+//             process.nextTick(function() {
+//                 var enrichment_method = enrichment_services[index];
+//                 request.get(
+//                     'https://intellead-data.herokuapp.com/lead-to-enrich',
+//                     { json: { enrichService: enrichment_method } },
+//                     function (error, response, body) {
+//                         if (!error && response.statusCode == 200) {
+//                             var itens = body;
+//                             for (var index in itens) {
+//                                 var item = itens[index];
+//                                 var service = new LeadEnrichmentService();
+//                                 service[enrichment_method](item);
+//                             }
+//                         }
+//                         if (error || response.statusCode != 200) {
+//                             if (error) {
+//                                 console.log(error);
+//                             } else {
+//                                 console.log(response);
+//                             }
+//                         }
+//                     }
+//                 );
+//             });
+//         })();
+//     }
+// });
 
 app.use('/', router);
 
@@ -70,7 +70,11 @@ app.post('/lead-enrichment', function (req, res) {
     var lead_id = item._id;
     var company = item.lead.company;
     var cnpj = item.lead.cnpj;
+    console.log("COMECOU O ENRIQUECIMENTO DO LEAD: " + lead_id);
     new LeadEnrichmentService().enrichLeadWithAllServices(lead_id, company, cnpj, function(result) {
+        if (result == 200) {
+            console.log("FINALIZOU O ENRIQUECIMENTO DO LEAD: " + lead_id);
+        }
         res.sendStatus(result);
     });
 });
