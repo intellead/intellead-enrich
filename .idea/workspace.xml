@@ -30,8 +30,8 @@
       <file leaf-file-name="LeadEnrichmentService.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/LeadEnrichmentService.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="105">
-              <caret line="7" column="25" lean-forward="false" selection-start-line="7" selection-start-column="25" selection-end-line="7" selection-end-column="25" />
+            <state relative-caret-position="443">
+              <caret line="44" column="68" lean-forward="false" selection-start-line="44" selection-start-column="68" selection-end-line="44" selection-end-column="68" />
               <folding />
             </state>
           </provider>
@@ -171,7 +171,8 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Node.js.Test.js">
+  <component name="RunManager" selected="Node.js.LeadEnrichmentService.js">
+    <configuration name="LeadEnrichmentService.js" type="NodeJSConfigurationType" factoryName="Node.js" temporary="true" path-to-node="project" path-to-js-file="LeadEnrichmentService.js" working-dir="$PROJECT_DIR$/src" />
     <configuration name="Test.js" type="NodeJSConfigurationType" factoryName="Node.js" temporary="true" path-to-node="project" path-to-js-file="Test.js" working-dir="$PROJECT_DIR$" />
     <configuration name="X.js" type="NodeJSConfigurationType" factoryName="Node.js" temporary="true" path-to-node="project" path-to-js-file="X.js" working-dir="$PROJECT_DIR$/src" />
     <configuration name="Y.js" type="NodeJSConfigurationType" factoryName="Node.js" temporary="true" path-to-node="project" path-to-js-file="Y.js" working-dir="$PROJECT_DIR$/src" />
@@ -240,17 +241,19 @@
       <recursive>false</recursive>
       <method />
     </configuration>
-    <list size="4">
+    <list size="5">
       <item index="0" class="java.lang.String" itemvalue="Node.js.bin\www" />
       <item index="1" class="java.lang.String" itemvalue="Node.js.X.js" />
       <item index="2" class="java.lang.String" itemvalue="Node.js.Y.js" />
       <item index="3" class="java.lang.String" itemvalue="Node.js.Test.js" />
+      <item index="4" class="java.lang.String" itemvalue="Node.js.LeadEnrichmentService.js" />
     </list>
     <recent_temporary>
-      <list size="3">
-        <item index="0" class="java.lang.String" itemvalue="Node.js.Test.js" />
-        <item index="1" class="java.lang.String" itemvalue="Node.js.Y.js" />
-        <item index="2" class="java.lang.String" itemvalue="Node.js.X.js" />
+      <list size="4">
+        <item index="0" class="java.lang.String" itemvalue="Node.js.LeadEnrichmentService.js" />
+        <item index="1" class="java.lang.String" itemvalue="Node.js.Test.js" />
+        <item index="2" class="java.lang.String" itemvalue="Node.js.Y.js" />
+        <item index="3" class="java.lang.String" itemvalue="Node.js.X.js" />
       </list>
     </recent_temporary>
   </component>
@@ -280,12 +283,12 @@
       <workItem from="1501142842006" duration="2635000" />
       <workItem from="1501163953110" duration="910000" />
       <workItem from="1501199651852" duration="6150000" />
-      <workItem from="1501277511610" duration="4032000" />
+      <workItem from="1501277511610" duration="5850000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="74711000" />
+    <option name="totallyTimeSpent" value="76529000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
@@ -705,8 +708,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/LeadEnrichmentService.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="7" column="25" lean-forward="false" selection-start-line="7" selection-start-column="25" selection-end-line="7" selection-end-column="25" />
+        <state relative-caret-position="443">
+          <caret line="44" column="68" lean-forward="false" selection-start-line="44" selection-start-column="68" selection-end-line="44" selection-end-column="68" />
           <folding />
         </state>
       </provider>

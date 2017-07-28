@@ -24,12 +24,10 @@ class LeadEnrichmentService {
                         function (error, response, body) {
                             if (error) {
                                 console.log(error);
-                                this.enrichmentServicesReady.push('enrichByReceitaWS');
-                                this.classifyIfAllServicesAreReady(this.enrichmentServicesReady, id);
+                                this.classifyIfAllServicesAreReady('enrichByQcnpjCrawler', id);
                             } else if((this._cnpj == null || this._cnpj == undefined) && info.cnpj) {
                                 new LeadEnrichmentService().updateEnrichAttempts('enrichByQcnpjCrawler', id, true);
-                                this.enrichmentServicesReady.push('enrichByReceitaWS');
-                                this.classifyIfAllServicesAreReady(this.enrichmentServicesReady, id);
+                                this.classifyIfAllServicesAreReady('enrichByQcnpjCrawler', id);
                                 item.lead.cnpj = info.cnpj;
                                 new LeadEnrichmentService().enrichByReceitaWS(item);
                             }
@@ -38,15 +36,13 @@ class LeadEnrichmentService {
                 } else {
                     var attempts = (item.lead.enrichByQcnpjCrawler ? (item.lead.enrichByQcnpjCrawler+1): 1);
                     new LeadEnrichmentService().updateEnrichAttempts('enrichByQcnpjCrawler', id, attempts);
-                    this.enrichmentServicesReady.push('enrichByReceitaWS');
-                    this.classifyIfAllServicesAreReady(this.enrichmentServicesReady, id);
+                    this.classifyIfAllServicesAreReady('enrichByQcnpjCrawler', id);
                 }
             });
         } else {
             var attempts = (item.lead.enrichByQcnpjCrawler ? (item.lead.enrichByQcnpjCrawler+1): 1);
             new LeadEnrichmentService().updateEnrichAttempts('enrichByQcnpjCrawler', id, attempts);
-            this.enrichmentServicesReady.push('enrichByReceitaWS');
-            this.classifyIfAllServicesAreReady(this.enrichmentServicesReady, id);
+            this.classifyIfAllServicesAreReady('enrichByQcnpjCrawler', id);
         }
     }
 
@@ -63,32 +59,35 @@ class LeadEnrichmentService {
                         function (error, response, body) {
                             if (error) {
                                 console.log(error);
-                                this.enrichmentServicesReady.push('enrichByReceitaWS');
-                                this.classifyIfAllServicesAreReady(this.enrichmentServicesReady, id);
+                                this.classifyIfAllServicesAreReady('enrichByReceitaWS', id);
                                 return callback(response.statusCode);
                             } else {
                                 new LeadEnrichmentService().updateEnrichAttempts('enrichByReceitaWS', id, true);
-                                this.enrichmentServicesReady.push('enrichByReceitaWS');
-                                this.classifyIfAllServicesAreReady(this.enrichmentServicesReady, id);
+                                this.classifyIfAllServicesAreReady('enrichByReceitaWS', id);
                             }
                         }
                     );
                 } else {
                     var attempts = (item.lead.enrichByReceitaWS ? (item.lead.enrichByReceitaWS+1): 1);
                     new LeadEnrichmentService().updateEnrichAttempts('enrichByReceitaWS', id, attempts);
-                    this.enrichmentServicesReady.push('enrichByReceitaWS');
-                    this.classifyIfAllServicesAreReady(this.enrichmentServicesReady, id);
+                    this.classifyIfAllServicesAreReady('enrichByReceitaWS', id);
                 }
             });
         } else {
             var attempts = (item.lead.enrichByReceitaWS ? (item.lead.enrichByReceitaWS+1): 1);
             new LeadEnrichmentService().updateEnrichAttempts('enrichByReceitaWS', id, attempts);
-            this.enrichmentServicesReady.push('enrichByReceitaWS');
-            this.classifyIfAllServicesAreReady(this.enrichmentServicesReady, id);
+            this.classifyIfAllServicesAreReady('enrichByReceitaWS', id);
         }
     }
 
     /*---------------- UTILS ----------------*/
+
+    classifyIfAllServicesAreReady(service_name, lead_id) {
+        this.enrichmentServicesReady.push(service_name);
+        if (this.enrichmentServicesReady.indexOf('enrichByQcnpjCrawler') != -1 && this.enrichmentServicesReady.indexOf('enrichByReceitaWS') != -1) {
+            request.post('https://intellead-classification.herokuapp.com/lead_status_by_id/'+lead_id);
+        }
+    }
 
     enrichLeadWithAllServices(lead_id, company, cnpj, callback){
         var item = {
@@ -122,12 +121,11 @@ class LeadEnrichmentService {
         );
     }
 
-    classifyIfAllServicesAreReady(enrichmentServicesReady, lead_id) {
-        if (enrichmentServicesReady.indexOf('enrichByQcnpjCrawler') != -1 && enrichmentServicesReady.indexOf('enrichByReceitaWS') != -1) {
-            request.post('https://intellead-classification.herokuapp.com/lead_status_by_id/'+lead_id);
-        }
-    }
-
 
 }
 module.exports = LeadEnrichmentService;
+
+var t = new LeadEnrichmentService();
+console.log(t.enrichmentServicesReady);
+t.enrichmentServicesReady.push('teste');
+console.log(t.enrichmentServicesReady);
