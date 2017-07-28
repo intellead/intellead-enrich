@@ -71,9 +71,9 @@ app.post('/lead-enrichment', function (req, res) {
     console.log("Item: " + item);
     var lead_id = item._id;
     console.log("lead_id: " + lead_id);
-    var company = item.lead.company;
+    var company = item.company;
     console.log("company: " + company);
-    var cnpj = item.lead.cnpj;
+    var cnpj = item.cnpj;
     console.log("cnpj: " + cnpj);
     console.log("COMECOU O ENRIQUECIMENTO DO LEAD: " + lead_id);
     new LeadEnrichmentService().enrichLeadWithAllServices(lead_id, company, cnpj, function(result) {
