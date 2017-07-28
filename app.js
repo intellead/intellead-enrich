@@ -66,10 +66,15 @@ app.use(function(req, res, next) {
 app.use('/', router);
 
 app.post('/lead-enrichment', function (req, res) {
+    console.log("[lead-enrichment] ENTROU");
     var item = req.body.item;
+    console.log("Item: " + item);
     var lead_id = item._id;
+    console.log("lead_id: " + lead_id);
     var company = item.lead.company;
+    console.log("company: " + company);
     var cnpj = item.lead.cnpj;
+    console.log("cnpj: " + cnpj);
     console.log("COMECOU O ENRIQUECIMENTO DO LEAD: " + lead_id);
     new LeadEnrichmentService().enrichLeadWithAllServices(lead_id, company, cnpj, function(result) {
         if (result == 200) {
