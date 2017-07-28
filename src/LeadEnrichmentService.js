@@ -24,10 +24,10 @@ class LeadEnrichmentService {
                         function (error, response, body) {
                             if (error) {
                                 console.log(error);
-                                this.classifyIfAllServicesAreReady('enrichByQcnpjCrawler', id);
+                                classifyIfAllServicesAreReady('enrichByQcnpjCrawler', id);
                             } else if((this._cnpj == null || this._cnpj == undefined) && info.cnpj) {
                                 new LeadEnrichmentService().updateEnrichAttempts('enrichByQcnpjCrawler', id, true);
-                                this.classifyIfAllServicesAreReady('enrichByQcnpjCrawler', id);
+                                classifyIfAllServicesAreReady('enrichByQcnpjCrawler', id);
                                 item.lead.cnpj = info.cnpj;
                                 new LeadEnrichmentService().enrichByReceitaWS(item);
                             }
@@ -36,13 +36,13 @@ class LeadEnrichmentService {
                 } else {
                     var attempts = (item.lead.enrichByQcnpjCrawler ? (item.lead.enrichByQcnpjCrawler+1): 1);
                     new LeadEnrichmentService().updateEnrichAttempts('enrichByQcnpjCrawler', id, attempts);
-                    this.classifyIfAllServicesAreReady('enrichByQcnpjCrawler', id);
+                    classifyIfAllServicesAreReady('enrichByQcnpjCrawler', id);
                 }
             });
         } else {
             var attempts = (item.lead.enrichByQcnpjCrawler ? (item.lead.enrichByQcnpjCrawler+1): 1);
             new LeadEnrichmentService().updateEnrichAttempts('enrichByQcnpjCrawler', id, attempts);
-            this.classifyIfAllServicesAreReady('enrichByQcnpjCrawler', id);
+            classifyIfAllServicesAreReady('enrichByQcnpjCrawler', id);
         }
     }
 
@@ -59,24 +59,24 @@ class LeadEnrichmentService {
                         function (error, response, body) {
                             if (error) {
                                 console.log(error);
-                                this.classifyIfAllServicesAreReady('enrichByReceitaWS', id);
+                                classifyIfAllServicesAreReady('enrichByReceitaWS', id);
                                 return callback(response.statusCode);
                             } else {
                                 new LeadEnrichmentService().updateEnrichAttempts('enrichByReceitaWS', id, true);
-                                this.classifyIfAllServicesAreReady('enrichByReceitaWS', id);
+                                classifyIfAllServicesAreReady('enrichByReceitaWS', id);
                             }
                         }
                     );
                 } else {
                     var attempts = (item.lead.enrichByReceitaWS ? (item.lead.enrichByReceitaWS+1): 1);
                     new LeadEnrichmentService().updateEnrichAttempts('enrichByReceitaWS', id, attempts);
-                    this.classifyIfAllServicesAreReady('enrichByReceitaWS', id);
+                    classifyIfAllServicesAreReady('enrichByReceitaWS', id);
                 }
             });
         } else {
             var attempts = (item.lead.enrichByReceitaWS ? (item.lead.enrichByReceitaWS+1): 1);
             new LeadEnrichmentService().updateEnrichAttempts('enrichByReceitaWS', id, attempts);
-            this.classifyIfAllServicesAreReady('enrichByReceitaWS', id);
+            classifyIfAllServicesAreReady('enrichByReceitaWS', id);
         }
     }
 
