@@ -124,8 +124,3 @@ class LeadEnrichmentService {
 
 }
 module.exports = LeadEnrichmentService;
-
-var t = new LeadEnrichmentService();
-console.log(t.enrichmentServicesReady);
-t.enrichmentServicesReady.push('teste');
-console.log(t.enrichmentServicesReady);
