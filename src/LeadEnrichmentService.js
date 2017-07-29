@@ -111,7 +111,7 @@ class LeadEnrichmentService {
     updateEnrichAttempts(serviceName, lead_id, attemps) {
         var qtEnrichmentAttempts = {
             [serviceName] : attemps
-        }
+        };
         request.post(
             'https://intellead-data.herokuapp.com/update-enrich-attempts',
             { json: { lead_id: lead_id, attempts: qtEnrichmentAttempts } },

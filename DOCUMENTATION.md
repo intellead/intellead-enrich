@@ -16,7 +16,7 @@ Intellead Enrich aims to be an easy way to enrich information about leads.
   <li>Configuration
   <li>Use Cases
     <ul>
-      <li>Enrich leads</li>
+      <li>Enrich leads [/lead-enrichment-by-id]</li>
       <li>Lead enrichment scheduling</li>
     </ul>
   </li>
@@ -51,9 +51,11 @@ This should be as easy as possible for you but there are few things to consider 
 Once the application is installed (check Installation) is not need define others settings. 
 <h3>Use Cases</h3>
 Some use cases for intellead-enrich.
-<h4>Enrich lead</h4>
+<h4>Enrich lead [/lead-enrichment-by-id]</h4>
 This application provides a service to enrich a lead by id.
 We can call the API like this:
+
+If you don't have lead information:
 
 ```javascript
 
@@ -72,6 +74,22 @@ $.ajax({
 })
 
 ```
+
+If you have lead information: (should only be used by intellead-data application in service /rd-webhook)
+
+```javascript
+
+var lead = {}; //json with entire lead data
+request.post(
+    'https://your_domain.com/lead-enrichment', 
+    { 
+        json: { 
+            lead: lead 
+        } 
+    });
+
+```
+
 
 <h4>Lead enrichment scheduling</h4>
 intellead-enrich uses node-schedule to automate the enrichment service.
