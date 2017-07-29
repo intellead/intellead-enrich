@@ -88,7 +88,7 @@ class LeadEnrichmentService {
         this.enrichmentServicesReady.push(service_name);
         console.log(this);
         if (this.enrichmentServicesReady.indexOf('enrichByQcnpjCrawler') != -1 && this.enrichmentServicesReady.indexOf('enrichByReceitaWS') != -1) {
-            request.post('https://intellead-classification.herokuapp.com/lead_status_by_id/'+lead_id);
+            request.get('https://intellead-classification.herokuapp.com/lead_status_by_id/'+lead_id);
         }
     }
 
