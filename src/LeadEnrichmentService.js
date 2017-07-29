@@ -10,7 +10,8 @@ class LeadEnrichmentService {
 
     /*---------------- SERVICES ----------------*/
 
-    enrichByQcnpjCrawler(item, that) {
+    enrichByQcnpjCrawler(item) {
+        var that = this;
         console.log(that);
         var id = item._id;
         var company_name = item.lead.company;
@@ -47,7 +48,8 @@ class LeadEnrichmentService {
         }
     }
 
-    enrichByReceitaWS(item, that) {
+    enrichByReceitaWS(item) {
+        var that = this;
         console.log(that);
         var id = item._id;
         if (item.lead && item.lead.cnpj) {
@@ -102,10 +104,10 @@ class LeadEnrichmentService {
         };
         console.log(this);
         if (cnpj) {
-            this.enrichByReceitaWS(item, this);
+            this.enrichByReceitaWS(item);
         }
         if (company) {
-            this.enrichByQcnpjCrawler(item, this);
+            this.enrichByQcnpjCrawler(item);
         }
         return callback(200);
     }
