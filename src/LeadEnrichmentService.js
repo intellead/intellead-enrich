@@ -30,7 +30,7 @@ class LeadEnrichmentService {
                                 new LeadEnrichmentService().updateEnrichAttempts('enrichByQcnpjCrawler', id, true);
                                 that.classifyIfAllServicesAreReady('enrichByQcnpjCrawler', id);
                                 item.lead.cnpj = info.cnpj;
-                                new LeadEnrichmentService().enrichByReceitaWS(item);
+                                that.enrichByReceitaWS(item, that);
                             }
                         }
                     );
