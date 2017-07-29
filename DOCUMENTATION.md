@@ -33,7 +33,8 @@ This way you do not need to install any other components for this to work.
 This application depends on the following services:<br>
 intellead-data (provides information of the leads to be enriched and persists new information)<br>
 receitaws-data (provides company information of the lead through cnpj)<br>
-qcnpj-crawler (provide lead company information by company name)
+qcnpj-crawler (provide lead company information by company name)<br>
+intellead-classification (after all the enrichment services finish processing, this service is called to classify the lead)
 <h4>Get a copy</h4>
 I like to encourage you to contribute to the repository.<br>
 This should be as easy as possible for you but there are few things to consider when contributing. The following guidelines for contribution should be followed if you want to submit a pull request.
