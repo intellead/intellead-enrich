@@ -12,7 +12,6 @@ class LeadEnrichmentService {
 
     enrichByQcnpjCrawler(item) {
         var that = this;
-        console.log(that);
         var id = item._id;
         var company_name = item.lead.company;
         if (company_name) {
@@ -50,7 +49,6 @@ class LeadEnrichmentService {
 
     enrichByReceitaWS(item) {
         var that = this;
-        console.log(that);
         var id = item._id;
         if (item.lead && item.lead.cnpj) {
             var queryReceitaws = 'https://receitaws-data.herokuapp.com/?cnpj='+item.lead.cnpj;
@@ -88,7 +86,6 @@ class LeadEnrichmentService {
 
     classifyIfAllServicesAreReady(service_name, lead_id) {
         this.enrichmentServicesReady.push(service_name);
-        console.log(this);
         if (this.enrichmentServicesReady.indexOf('enrichByQcnpjCrawler') != -1 && this.enrichmentServicesReady.indexOf('enrichByReceitaWS') != -1) {
             request.get('https://intellead-classification.herokuapp.com/lead_status_by_id/'+lead_id);
         }
@@ -102,7 +99,6 @@ class LeadEnrichmentService {
                 'cnpj': cnpj
             }
         };
-        console.log(this);
         if (cnpj) {
             this.enrichByReceitaWS(item);
         }
