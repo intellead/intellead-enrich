@@ -30,7 +30,7 @@ app.use(function(req, res, next) {
 });
 
 
-var enrich_each_5_minutes = schedule.scheduleJob('*/5 * * * *', function(){
+var enrich_each_5_minutes = schedule.scheduleJob('*/1 * * * *', function(){
     var enrichment_services = ['enrichByQcnpjCrawler', 'enrichByReceitaWS'];
     for (var indexOfEnrichmentServices in enrichment_services) {
         (function() {
