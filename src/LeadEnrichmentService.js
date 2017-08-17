@@ -108,9 +108,9 @@ class LeadEnrichmentService {
         return callback(200);
     }
 
-    updateEnrichAttempts(serviceName, lead_id, attemps) {
+    updateEnrichAttempts(serviceName, lead_id, attempts) {
         var qtEnrichmentAttempts = {
-            [serviceName] : attemps
+            [serviceName] : attempts
         };
         request.post(
             'https://intellead-data.herokuapp.com/update-enrich-attempts',
