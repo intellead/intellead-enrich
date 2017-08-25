@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ee05257f-2f39-4c25-92cc-bee688d585ac" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app.js" afterPath="$PROJECT_DIR$/app.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/LeadEnrichmentService.js" afterPath="$PROJECT_DIR$/src/LeadEnrichmentService.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -16,21 +17,21 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="app.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="app.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="495">
-              <caret line="61" column="6" lean-forward="false" selection-start-line="61" selection-start-column="6" selection-end-line="61" selection-end-column="6" />
+            <state relative-caret-position="333">
+              <caret line="70" column="57" lean-forward="false" selection-start-line="70" selection-start-column="32" selection-end-line="70" selection-end-column="57" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="LeadEnrichmentService.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="LeadEnrichmentService.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/LeadEnrichmentService.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="209">
-              <caret line="111" column="32" lean-forward="false" selection-start-line="111" selection-start-column="12" selection-end-line="111" selection-end-column="32" />
+            <state relative-caret-position="387">
+              <caret line="102" column="8" lean-forward="false" selection-start-line="102" selection-start-column="8" selection-end-line="102" selection-end-column="8" />
               <folding />
             </state>
           </provider>
@@ -47,8 +48,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>lead_id</find>
-      <find>consol</find>
       <find>console</find>
       <find>body.company.cnpj</find>
       <find>intellead-data</find>
@@ -74,9 +73,11 @@
       <find>new</find>
       <find>lead-info</find>
       <find>lead-enrichment-by-id</find>
-      <find>enrichmentServicesReady</find>
       <find>console.log</find>
       <find>attem</find>
+      <find>enrichmentServicesReady</find>
+      <find>2</find>
+      <find>3</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -90,8 +91,8 @@
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/Test.js" />
         <option value="$PROJECT_DIR$/DOCUMENTATION.md" />
-        <option value="$PROJECT_DIR$/src/LeadEnrichmentService.js" />
         <option value="$PROJECT_DIR$/app.js" />
+        <option value="$PROJECT_DIR$/src/LeadEnrichmentService.js" />
       </list>
     </option>
   </component>
@@ -304,12 +305,13 @@
       <workItem from="1502732808552" duration="335000" />
       <workItem from="1502830311980" duration="598000" />
       <workItem from="1502837683608" duration="120000" />
-      <workItem from="1502933115770" duration="891000" />
+      <workItem from="1502933115770" duration="1995000" />
+      <workItem from="1503663446789" duration="2022000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="92119000" />
+    <option name="totallyTimeSpent" value="95245000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
@@ -700,30 +702,23 @@
         <state split_layout="SECOND">
           <first_editor relative-caret-position="525">
             <caret line="35" column="68" lean-forward="false" selection-start-line="35" selection-start-column="68" selection-end-line="35" selection-end-column="68" />
-            <folding>
-              <marker date="1501312533000" expanded="true" signature="2766:2809" ph="{&quot;url&quot;: https...}" />
-              <marker date="1501312533000" expanded="true" signature="2888:2992" ph="{...}" />
-              <marker date="1501312533000" expanded="true" signature="3006:3039" ph="{...}" />
-              <marker date="1501312533000" expanded="true" signature="3281:3341" ph="{...}" />
-              <marker date="1501312533000" expanded="true" signature="3298:3334" ph="{&quot;lead&quot;: lead...}" />
-            </folding>
           </first_editor>
           <second_editor />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/LeadEnrichmentService.js">
+    <entry file="file://$PROJECT_DIR$/app.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="209">
-          <caret line="111" column="32" lean-forward="false" selection-start-line="111" selection-start-column="12" selection-end-line="111" selection-end-column="32" />
+        <state relative-caret-position="333">
+          <caret line="70" column="57" lean-forward="false" selection-start-line="70" selection-start-column="32" selection-end-line="70" selection-end-column="57" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app.js">
+    <entry file="file://$PROJECT_DIR$/src/LeadEnrichmentService.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="495">
-          <caret line="61" column="6" lean-forward="false" selection-start-line="61" selection-start-column="6" selection-end-line="61" selection-end-column="6" />
+        <state relative-caret-position="387">
+          <caret line="102" column="8" lean-forward="false" selection-start-line="102" selection-start-column="8" selection-end-line="102" selection-end-column="8" />
           <folding />
         </state>
       </provider>

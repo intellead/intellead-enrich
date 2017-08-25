@@ -99,12 +99,8 @@ class LeadEnrichmentService {
                 'cnpj': cnpj
             }
         };
-        if (cnpj) {
-            this.enrichByReceitaWS(item);
-        }
-        if (company) {
-            this.enrichByQcnpjCrawler(item);
-        }
+        this.enrichByReceitaWS(item);
+        this.enrichByQcnpjCrawler(item);
         return callback(200);
     }
 
