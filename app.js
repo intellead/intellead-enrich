@@ -77,7 +77,7 @@ app.post('/lead-enrichment', function (req, res) {
 router.post('/lead-enrichment-by-id', function(req, res){
     var lead_id = req.body.lead_id;
     request.post(
-        'https://intellead-data.herokuapp.com/lead-info',
+        process.env.DATA_LEAD_INFO_URL,
         { json: { lead_id: lead_id } },
         function (error, response, body) {
             if (!error && response.statusCode == 200) {
