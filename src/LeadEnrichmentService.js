@@ -15,12 +15,12 @@ class LeadEnrichmentService {
         var id = item._id;
         var company_name = item.lead.company;
         if (company_name) {
-            var queryQcnpjCrawler = 'https://qcnpj-crawler.herokuapp.com/?companyName='+company_name;
+            var queryQcnpjCrawler = process.env.QCNPJ_CRAWLER_URL + '/?companyName='+company_name;
             request(queryQcnpjCrawler, function (error, response, body) {
                 if (!error && response.statusCode == 200) {
                     var info = JSON.parse(body);
                     request.post(
-                        'https://intellead-data.herokuapp.com/update-enriched-lead-information',
+                        process.env.DATA_UPDATE_ENRICHED_LEAD_INFO_URL,
                         { json: { lead_id: id, rich_information: info } },
                         function (error, response, body) {
                             if (error) {
@@ -51,12 +51,12 @@ class LeadEnrichmentService {
         var that = this;
         var id = item._id;
         if (item.lead && item.lead.cnpj) {
-            var queryReceitaws = 'https://receitaws-data.herokuapp.com/?cnpj='+item.lead.cnpj;
+            var queryReceitaws = process.env.RECEITAWS_DATA_URL + '/?cnpj='+item.lead.cnpj;
             request(queryReceitaws, function (error, response, body) {
                 if (!error && response.statusCode == 200) {
                     var info = JSON.parse(body);
                     request.post(
-                        'https://intellead-data.herokuapp.com/update-enriched-lead-information',
+                        process.env.DATA_UPDATE_ENRICHED_LEAD_INFO_URL,
                         { json: { lead_id: id, rich_information: info } },
                         function (error, response, body) {
                             if (error) {
@@ -87,7 +87,7 @@ class LeadEnrichmentService {
     classifyIfAllServicesAreReady(service_name, lead_id) {
         this.enrichmentServicesReady.push(service_name);
         if (this.enrichmentServicesReady.indexOf('enrichByQcnpjCrawler') != -1 && this.enrichmentServicesReady.indexOf('enrichByReceitaWS') != -1) {
-            request.get('https://intellead-classification.herokuapp.com/lead_status_by_id/'+lead_id);
+            request.get(process.env.CLASSIFICATION_URL + '/' + lead_id);
         }
     }
 
@@ -109,7 +109,7 @@ class LeadEnrichmentService {
             [serviceName] : attempts
         };
         request.post(
-            'https://intellead-data.herokuapp.com/update-enrich-attempts',
+            process.env.DATA_UPDATE_ENRICH_ATTEMPTS_URL,
             { json: { lead_id: lead_id, attempts: qtEnrichmentAttempts } },
             function (error, response, body) {
                 if (error) {

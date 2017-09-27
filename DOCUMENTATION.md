@@ -49,7 +49,17 @@ This should be as easy as possible for you but there are few things to consider 
   <li>Even if you have write access to the repository, do not directly push or merge pull-requests. Let another team member review your pull request and approve.</li>
 </ul>
 <h3>Configuration</h3>
-Once the application is installed (check Installation) is not need define others settings. 
+Once the application is installed (check Installation) define the following settings to enable the application behavior.
+<h4>Config vars</h4>
+The application uses other intellead services.<br>
+For this it is necessary to configure the URL variables.<br>
+You must config the following vars:<br>
+DATA_LEAD_INFO_URL - Full URL of Lead Info API from Data Service;<br>
+QCNPJ_CRAWLER_URL - Full URL of QCNPJ API from QCNPJ Crawler Service;<br>
+DATA_UPDATE_ENRICHED_LEAD_INFO_URL - Full URL of Update Enriched Lead Information API from Data Service;<br>
+RECEITAWS_DATA_URL - Full URL of ReceitaWS API from ReceitaWS Service;<br>
+CLASSIFICATION_URL - Full URL of Classification Service;<br>
+DATA_UPDATE_ENRICH_ATTEMPTS_URL - Full URL of Update Enrich Attempts of Data Service.<br>
 <h3>Use Cases</h3>
 Some use cases for intellead-enrich.
 <h4>Enrich lead [/lead-enrichment-by-id]</h4>
