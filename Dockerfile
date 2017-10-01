@@ -4,10 +4,6 @@ ENV HOME=/home/intellead/intellead-enrich
 
 ENV PORT=3000
 
-ENV REGISTRY_URL=localhost
-
-ENV REGISTRY_PORT=8761
-
 COPY app.js package.json $HOME/app/
 
 COPY bin/ $HOME/app/bin
