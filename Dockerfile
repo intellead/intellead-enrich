@@ -1,10 +1,14 @@
-FROM node
+FROM node:8.6.0-alpine
 
 ENV HOME=/home/intellead/intellead-enrich
 
-ENV PORT=3000
+WORKDIR $HOME/app
 
-COPY app.js package.json $HOME/app/
+COPY package.json $HOME/app/
+
+RUN npm install --silent --progress=false --production
+
+COPY app.js $HOME/app/
 
 COPY bin/ $HOME/app/bin
 
@@ -14,10 +18,8 @@ COPY src/ $HOME/app/src
 
 COPY views/ $HOME/app/views
 
-RUN cd $HOME/app && npm install --silent --progress=false --production
+ENV PORT=3000
 
 EXPOSE 3000
-
-WORKDIR $HOME/app
 
 CMD ["npm", "start"]
