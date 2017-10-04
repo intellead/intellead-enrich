@@ -29,8 +29,6 @@ class LeadEnrichmentService {
                             } else if((this._cnpj == null || this._cnpj == undefined) && info.cnpj) {
                                 new LeadEnrichmentService().updateEnrichAttempts('enrichByQcnpjCrawler', id, true);
                                 that.classifyIfAllServicesAreReady('enrichByQcnpjCrawler', id);
-                                item.lead.cnpj = info.cnpj;
-                                that.enrichByReceitaWS(item, that);
                             }
                         }
                     );
