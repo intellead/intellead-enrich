@@ -10,7 +10,7 @@ var app = express();
 var request = require('request');
 var LeadEnrichmentService = require('./src/LeadEnrichmentService');
 
-var dataLeadInfoUrl = process.env.DATA_LEAD_INFO_URL || 'http://intellead-data:5000/lead-info';
+var dataLeadInfoUrl = process.env.DATA_LEAD_INFO_URL || 'http://intellead-data:3000/lead-info';
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

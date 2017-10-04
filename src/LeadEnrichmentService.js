@@ -1,11 +1,11 @@
 'use strict';
 
 var request = require('request');
-var qcnpjCrawlerUrl = process.env.QCNPJ_CRAWLER_URL || 'http://qcnpj-crawler:3002';
-var receitawsDataUrl = process.env.RECEITAWS_DATA_URL || 'http://receitaws-data:3001';
-var dataUpdateEnrichedLeadInfoUrl = process.env.DATA_UPDATE_ENRICHED_LEAD_INFO_URL || 'http://intellead-data:5000/update-enriched-lead-information';
-var dataUpdateEnrichAttempsUrl = process.env.DATA_UPDATE_ENRICH_ATTEMPTS_URL || 'http://intellead-data:5000/update-enrich-attempts';
-var classificationUrl = process.env.CLASSIFICATION_URL || 'http://intellead-classification:4000';
+var qcnpjCrawlerUrl = process.env.QCNPJ_CRAWLER_URL || 'http://qcnpj-crawler:3000';
+var receitawsDataUrl = process.env.RECEITAWS_DATA_URL || 'http://receitaws-data:3000';
+var dataUpdateEnrichedLeadInfoUrl = process.env.DATA_UPDATE_ENRICHED_LEAD_INFO_URL || 'http://intellead-data:3000/update-enriched-lead-information';
+var dataUpdateEnrichAttempsUrl = process.env.DATA_UPDATE_ENRICH_ATTEMPTS_URL || 'http://intellead-data:3000/update-enrich-attempts';
+var classificationUrl = process.env.CLASSIFICATION_URL || 'http://intellead-classification:5000/lead_status_by_id';
 
 class LeadEnrichmentService {
 
