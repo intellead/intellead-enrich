@@ -10,6 +10,8 @@ var app = express();
 var request = require('request');
 var LeadEnrichmentService = require('./src/LeadEnrichmentService');
 
+var dataLeadInfoUrl = process.env.DATA_LEAD_INFO_URL || 'http://intellead-data:3000/lead-info';
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -41,7 +43,7 @@ app.post('/lead-enrichment', function (req, res) {
 router.post('/lead-enrichment-by-id', function(req, res){
     var lead_id = req.body.lead_id;
     request.post(
-        process.env.DATA_LEAD_INFO_URL,
+        dataLeadInfoUrl,
         { json: { lead_id: lead_id } },
         function (error, response, body) {
             if (!error && response.statusCode == 200) {
