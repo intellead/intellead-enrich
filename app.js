@@ -5,9 +5,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var router = express.Router();
 var app = express();
-var request = require('request');
 var LeadEnrichmentService = require('./src/LeadEnrichmentService');
-var dataLeadInfoUrl = process.env.DATA_LEAD_INFO_URL || 'http://intellead-data:3000/lead-info';
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -48,8 +46,10 @@ app.use(function(err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
+
   // router the error page
   res.status(err.status || 500);
+  res.render('error');
 });
 
 module.exports = app;
