@@ -25,7 +25,7 @@ class LeadEnrichmentService {
                     var options = {
                         uri: dataUpdateEnrichedLeadInfoUrl,
                         method: 'POST',
-                        headers: { json: { lead_id: id, rich_information: info } }
+                        json: { lead_id: id, rich_information: info }
                     };
                     request(options, function(error, response, body){
                             if (error) {
@@ -61,7 +61,7 @@ class LeadEnrichmentService {
                     var options = {
                         uri: dataUpdateEnrichedLeadInfoUrl,
                         method: 'POST',
-                        headers: { json: { lead_id: id, rich_information: info } }
+                        json: { lead_id: id, rich_information: info }
                     };
                     request(options, function(error, response, body){
                             if (error) {
@@ -117,7 +117,7 @@ class LeadEnrichmentService {
         var options = {
             uri: dataUpdateEnrichAttempsUrl,
             method: 'POST',
-            headers: { json: { lead_id: lead_id, attempts: qtEnrichmentAttempts } }
+            json: { lead_id: lead_id, attempts: qtEnrichmentAttempts }
         };
         request(options, function(error, response, body){
                 if (error) {
