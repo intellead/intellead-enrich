@@ -13,8 +13,6 @@ class LeadEnrichmentService {
         this.enrichmentServicesReady = [];
     }
 
-    /*---------------- SERVICES ----------------*/
-
     enrichByQcnpjCrawler(item) {
         var that = this;
         var id = item._id;
@@ -24,33 +22,35 @@ class LeadEnrichmentService {
             request(queryQcnpjCrawler, function (error, response, body) {
                 if (!error && response.statusCode == 200) {
                     var info = JSON.parse(body);
-                    request.post(
-                        dataUpdateEnrichedLeadInfoUrl,
-                        { json: { lead_id: id, rich_information: info } },
-                        function (error, response, body) {
+                    var options = {
+                        uri: dataUpdateEnrichedLeadInfoUrl,
+                        method: 'POST',
+                        headers: { json: { lead_id: id, rich_information: info } }
+                    };
+                    request(options, function(error, response, body){
                             if (error) {
                                 console.log(error);
                                 that.classifyIfAllServicesAreReady('enrichByQcnpjCrawler', id);
-                            } else if((this._cnpj == null || this._cnpj == undefined) && info.cnpj) {
-                                new LeadEnrichmentService().updateEnrichAttempts('enrichByQcnpjCrawler', id, true);
+                            } else {
+                                that.updateEnrichAttempts('enrichByQcnpjCrawler', id, true);
                                 that.classifyIfAllServicesAreReady('enrichByQcnpjCrawler', id);
                             }
                         }
                     );
                 } else {
                     var attempts = (item.lead.enrichByQcnpjCrawler ? (item.lead.enrichByQcnpjCrawler+1): 1);
-                    new LeadEnrichmentService().updateEnrichAttempts('enrichByQcnpjCrawler', id, attempts);
+                    that.updateEnrichAttempts('enrichByQcnpjCrawler', id, attempts);
                     that.classifyIfAllServicesAreReady('enrichByQcnpjCrawler', id);
                 }
             });
         } else {
             var attempts = (item.lead.enrichByQcnpjCrawler ? (item.lead.enrichByQcnpjCrawler+1): 1);
-            new LeadEnrichmentService().updateEnrichAttempts('enrichByQcnpjCrawler', id, attempts);
+            that.updateEnrichAttempts('enrichByQcnpjCrawler', id, attempts);
             that.classifyIfAllServicesAreReady('enrichByQcnpjCrawler', id);
         }
     }
 
-    enrichByReceitaWS(item) {
+    enrichByReceitaWS(item, callback) {
         var that = this;
         var id = item._id;
         if (item.lead && item.lead.cnpj) {
@@ -58,39 +58,42 @@ class LeadEnrichmentService {
             request(queryReceitaws, function (error, response, body) {
                 if (!error && response.statusCode == 200) {
                     var info = JSON.parse(body);
-                    request.post(
-                        dataUpdateEnrichedLeadInfoUrl,
-                        { json: { lead_id: id, rich_information: info } },
-                        function (error, response, body) {
+                    var options = {
+                        uri: dataUpdateEnrichedLeadInfoUrl,
+                        method: 'POST',
+                        headers: { json: { lead_id: id, rich_information: info } }
+                    };
+                    request(options, function(error, response, body){
                             if (error) {
                                 console.log(error);
                                 that.classifyIfAllServicesAreReady('enrichByReceitaWS', id);
                                 return callback(response.statusCode);
                             } else {
-                                new LeadEnrichmentService().updateEnrichAttempts('enrichByReceitaWS', id, true);
+                                that.updateEnrichAttempts('enrichByReceitaWS', id, true);
                                 that.classifyIfAllServicesAreReady('enrichByReceitaWS', id);
                             }
                         }
                     );
                 } else {
                     var attempts = (item.lead.enrichByReceitaWS ? (item.lead.enrichByReceitaWS+1): 1);
-                    new LeadEnrichmentService().updateEnrichAttempts('enrichByReceitaWS', id, attempts);
+                    that.updateEnrichAttempts('enrichByReceitaWS', id, attempts);
                     that.classifyIfAllServicesAreReady('enrichByReceitaWS', id);
                 }
             });
         } else {
             var attempts = (item.lead.enrichByReceitaWS ? (item.lead.enrichByReceitaWS+1): 1);
-            new LeadEnrichmentService().updateEnrichAttempts('enrichByReceitaWS', id, attempts);
+            that.updateEnrichAttempts('enrichByReceitaWS', id, attempts);
             that.classifyIfAllServicesAreReady('enrichByReceitaWS', id);
         }
     }
 
-    /*---------------- UTILS ----------------*/
-
     classifyIfAllServicesAreReady(service_name, lead_id) {
+        if (this.enrichmentServicesReady == undefined) {
+            this.enrichmentServicesReady = [];
+        }
         this.enrichmentServicesReady.push(service_name);
         if (this.enrichmentServicesReady.indexOf('enrichByQcnpjCrawler') != -1 && this.enrichmentServicesReady.indexOf('enrichByReceitaWS') != -1) {
-            request.get(classificationUrl + '/' + lead_id);
+            request(classificationUrl + '/' + lead_id);
         }
     }
 
@@ -111,17 +114,18 @@ class LeadEnrichmentService {
         var qtEnrichmentAttempts = {
             [serviceName] : attempts
         };
-        request.post(
-            dataUpdateEnrichAttempsUrl,
-            { json: { lead_id: lead_id, attempts: qtEnrichmentAttempts } },
-            function (error, response, body) {
+        var options = {
+            uri: dataUpdateEnrichAttempsUrl,
+            method: 'POST',
+            headers: { json: { lead_id: lead_id, attempts: qtEnrichmentAttempts } }
+        };
+        request(options, function(error, response, body){
                 if (error) {
                     console.log(error);
                 }
             }
         );
     }
-
 
 }
 module.exports = LeadEnrichmentService;

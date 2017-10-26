@@ -1,0 +1,31 @@
+{ "lead":
+  {
+    "last_marked_opportunity_date": null,
+    "last_conversion":
+    {
+      "cumulative_sum": "41",
+      "created_at": "2017-09-09T13:55:21.000-03:00",
+      "source": "/ebooks/guia-do-pbqp-h/"
+    },
+    "city": null,
+    "bio": null,
+    "created_at": "2010-01-01T00:00:00.000-02:00",
+    "cnpj": "13.926.863/0001-36",
+    "company": "Elitim",
+    "job_title": "Assistente",
+    "email": "jhon@silva.com",
+    "first_conversion":
+    {
+      "cumulative_sum": "1",
+      "created_at": "2010-01-01T00:00:00.000-02:00",
+      "source": "Planilhas_x_ERP_-_Base",
+      "tags": [ "planilhasxerp - a", "fluxo-nutrição" ]
+    },
+    "fit_score": "c",
+    "number_conversions": "41",
+    "name": "John Silva",
+    "lead_stage": "Lead",
+    "user": null,
+  "_id": 1000
+  }
+}
