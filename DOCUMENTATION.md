@@ -15,10 +15,6 @@ Intellead Enrich aims to be an easy way to enrich information about leads.
   </li>
   <li>Configuration
   <li>Use Cases
-    <ul>
-      <li>Enrich leads [/lead-enrichment-by-id]</li>
-      <li>Lead enrichment scheduling</li>
-    </ul>
   </li>
   <li>Copyrights and Licence</li>
 </ul>
@@ -60,55 +56,5 @@ DATA_UPDATE_ENRICHED_LEAD_INFO_URL - Full URL of Update Enriched Lead Informatio
 RECEITAWS_DATA_URL - Full URL of ReceitaWS API from ReceitaWS Service;<br>
 CLASSIFICATION_URL - Full URL of Classification Service;<br>
 DATA_UPDATE_ENRICH_ATTEMPTS_URL - Full URL of Update Enrich Attempts of Data Service.<br>
-<h3>Use Cases</h3>
-Some use cases for intellead-enrich.
-<h4>Enrich lead [/lead-enrichment-by-id]</h4>
-This application provides a service to enrich a lead by id.
-We can call the API like this:
-
-If you don't have lead information:
-
-```javascript
-
-var lead_id = $('#lead_id').val();
-$.ajax({
-    "crossDomain": true,
-    "url": https://your_domain.com/lead-enrichment-by-id,
-    "method": "POST",
-    "headers": {
-        "content-type": "application/x-www-form-urlencoded",
-        "cache-control": "no-cache"
-    },
-    "data": {
-        lead_id : lead_id
-    },
-})
-
-```
-
-If you have lead information: (should only be used by intellead-data application in service /rd-webhook)
-
-```javascript
-
-var lead = {}; //json with entire lead data
-request.post(
-    'https://your_domain.com/lead-enrichment', 
-    { 
-        json: { 
-            lead: lead 
-        } 
-    });
-
-```
-
-
-<h4>Lead enrichment scheduling</h4>
-intellead-enrich uses node-schedule to automate the enrichment service.
-Each 5 minutes intellead-enrich ask to intellead-data if exists leads not enriched, if it exists, it will enrich these.
-Each enriched service has a signature (which is the name of the service) that marks the lead if it has already been enriched by the service, if so, the lead is ignored and no longer needs to be enriched by it.
-If any service can not enrich the lead, it uses this signature to mark how many times it has tried to enrich the lead.
-Each service has a limit of 2 enrichment attempts per lead.
-The lead that is not enriched up to 2 times, should wait for a new lead conversion to try again.
-
 <h3>Copyrights and Licence</h3>
 TO DO

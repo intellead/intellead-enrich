@@ -14,8 +14,6 @@ COPY public/stylesheets/ ./public/stylesheets
 
 COPY src/ ./src
 
-COPY views/ ./views
-
 EXPOSE 3000
 
 CMD ["npm", "start"]
