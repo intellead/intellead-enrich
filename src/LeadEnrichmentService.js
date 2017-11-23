@@ -27,8 +27,9 @@ var classificationUrl = process.env.CLASSIFICATION_URL || 'http://intellead-clas
 
 class LeadEnrichmentService {
 
-    constructor() {
+    constructor(token) {
         this.enrichmentServicesReady = [];
+        this.token = token;
     }
 
     enrichByQcnpjCrawler(item) {
@@ -37,24 +38,24 @@ class LeadEnrichmentService {
         var company_name = item.lead.company;
         if (company_name) {
             var queryQcnpjCrawler = qcnpjCrawlerUrl + '/?companyName='+company_name;
-            request(queryQcnpjCrawler, function (error, response, body) {
+            request({url: queryQcnpjCrawler, headers: {token: that.token}}, function (error, response, body) {
                 if (!error && response.statusCode == 200) {
                     var info = JSON.parse(body);
                     var options = {
                         uri: dataUpdateEnrichedLeadInfoUrl,
                         method: 'POST',
-                        json: { lead_id: id, rich_information: info }
+                        json: { lead_id: id, rich_information: info },
+                        headers: {token: that.token}
                     };
                     request(options, function(error, response, body){
-                            if (error) {
-                                console.log(error);
-                                that.classifyIfAllServicesAreReady('enrichByQcnpjCrawler', id);
-                            } else {
-                                that.updateEnrichAttempts('enrichByQcnpjCrawler', id, true);
-                                that.classifyIfAllServicesAreReady('enrichByQcnpjCrawler', id);
-                            }
+                        if (error) {
+                            console.log(error);
+                            that.classifyIfAllServicesAreReady('enrichByQcnpjCrawler', id);
+                        } else {
+                            that.updateEnrichAttempts('enrichByQcnpjCrawler', id, true);
+                            that.classifyIfAllServicesAreReady('enrichByQcnpjCrawler', id);
                         }
-                    );
+                    });
                 } else {
                     var attempts = (item.lead.enrichByQcnpjCrawler ? (item.lead.enrichByQcnpjCrawler+1): 1);
                     that.updateEnrichAttempts('enrichByQcnpjCrawler', id, attempts);
@@ -73,25 +74,25 @@ class LeadEnrichmentService {
         var id = item._id;
         if (item.lead && item.lead.cnpj) {
             var queryReceitaws = receitawsDataUrl + '/?cnpj='+item.lead.cnpj;
-            request(queryReceitaws, function (error, response, body) {
+            request({url: queryReceitaws, headers: {token: that.token}}, function (error, response, body) {
                 if (!error && response.statusCode == 200) {
                     var info = JSON.parse(body);
                     var options = {
                         uri: dataUpdateEnrichedLeadInfoUrl,
                         method: 'POST',
-                        json: { lead_id: id, rich_information: info }
+                        json: { lead_id: id, rich_information: info },
+                        headers: {token: that.token}
                     };
                     request(options, function(error, response, body){
-                            if (error) {
-                                console.log(error);
-                                that.classifyIfAllServicesAreReady('enrichByReceitaWS', id);
-                                return callback(response.statusCode);
-                            } else {
-                                that.updateEnrichAttempts('enrichByReceitaWS', id, true);
-                                that.classifyIfAllServicesAreReady('enrichByReceitaWS', id);
-                            }
+                        if (error) {
+                            console.log(error);
+                            that.classifyIfAllServicesAreReady('enrichByReceitaWS', id);
+                            return callback(response.statusCode);
+                        } else {
+                            that.updateEnrichAttempts('enrichByReceitaWS', id, true);
+                            that.classifyIfAllServicesAreReady('enrichByReceitaWS', id);
                         }
-                    );
+                    });
                 } else {
                     var attempts = (item.lead.enrichByReceitaWS ? (item.lead.enrichByReceitaWS+1): 1);
                     that.updateEnrichAttempts('enrichByReceitaWS', id, attempts);
@@ -111,7 +112,12 @@ class LeadEnrichmentService {
         }
         this.enrichmentServicesReady.push(service_name);
         if (this.enrichmentServicesReady.indexOf('enrichByQcnpjCrawler') != -1 && this.enrichmentServicesReady.indexOf('enrichByReceitaWS') != -1) {
-            request(classificationUrl + '/' + lead_id);
+            var options = {
+                url: classificationUrl + '/' + lead_id,
+                method: 'GET',
+                headers: {token: this.token}
+            };
+            request(options);
         }
     }
 
@@ -135,14 +141,14 @@ class LeadEnrichmentService {
         var options = {
             uri: dataUpdateEnrichAttempsUrl,
             method: 'POST',
-            json: { lead_id: lead_id, attempts: qtEnrichmentAttempts }
+            json: { lead_id: lead_id, attempts: qtEnrichmentAttempts },
+            headers: {token: this.token}
         };
         request(options, function(error, response, body){
-                if (error) {
-                    console.log(error);
-                }
+            if (error) {
+                console.log(error);
             }
-        );
+        });
     }
 
 }

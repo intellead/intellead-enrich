@@ -24,6 +24,8 @@ var bodyParser = require('body-parser');
 var router = express.Router();
 var app = express();
 var LeadEnrichmentService = require('./src/LeadEnrichmentService');
+var request = require('request');
+var securityUrl = process.env.SECURITY_URL || 'http://intellead-security:8080/auth';
 
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -40,16 +42,20 @@ app.use(function(req, res, next) {
 app.use('/', router);
 
 app.post('/lead-enrichment', function (req, res) {
-    var lead = req.body.lead;
-    if (!lead) {
-        return res.sendStatus(422);
-    }
-    var lead_id = lead._id;
-    var company = lead.company;
-    var cnpj = lead.cnpj;
-    new LeadEnrichmentService().enrichLeadWithAllServices(lead_id, company, cnpj, function(result) {
-        res.sendStatus(result);
-    });
+    var token = req.header('token');
+    request({ url: securityUrl + '/' + token}, function(error, response, authBody) {
+        if (response.statusCode != 200) return res.sendStatus(403);
+        var lead = req.body.lead;
+        if (!lead) {
+            return res.sendStatus(422);
+        }
+        var lead_id = lead._id;
+        var company = lead.company;
+        var cnpj = lead.cnpj;
+        new LeadEnrichmentService(token).enrichLeadWithAllServices(lead_id, company, cnpj, function (result) {
+            res.sendStatus(result);
+        });
+    })
 });
 
 // catch 404 and forward to error handler

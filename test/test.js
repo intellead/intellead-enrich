@@ -16,30 +16,31 @@
  *
 */
 
-var server = require('../bin/www');
-var expect = require('chai').expect;
-var request = require('supertest');
 var sinon = require('sinon');
 var proxyquire = require('proxyquire');
+var supertest = require('supertest');
+var chai = require('chai');
+var expect = chai.expect;
+var request_stub = sinon.stub();
+var app = proxyquire('../app', {'request': request_stub});
+var request = supertest(app);
 
 describe('/', function() {
 
-    var request_stub;
+    this.timeout(15000);
+
     var LeadEnrichmentService;
     before(function () {
-        request_stub = sinon.stub();
         LeadEnrichmentService = proxyquire('../src/LeadEnrichmentService', {'request': request_stub});
     });
 
-    after(function () {
-        server.close();
-    });
-
     it('should return status code 422 when lead was not informed', function(done) {
-        request(server)
+        request_stub.withArgs({url: 'http://intellead-security:8080/auth/1'}).yields(null, {'statusCode': 200}, null);
+        request
             .post('/lead-enrichment')
+            .set('token', '1')
+            .expect(422)
             .end(function(err, res) {
-                expect(res.statusCode).to.equal(422);
                 done();
             });
     });
@@ -67,6 +68,16 @@ describe('/', function() {
             expect(status_code).to.equal(200);
             done();
         });
+    });
+
+    it('should return status code 403', function(done) {
+        request_stub.withArgs({url: 'http://intellead-security:8080/auth/1'}).yields(null, {'statusCode': 403}, null);
+        request.get('/lead-enrichment')
+            .set('token', '1')
+            .expect(403)
+            .end(function(err, res) {
+                done();
+            });
     });
 
 });
