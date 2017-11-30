@@ -33,12 +33,31 @@ class LeadEnrichmentService {
     }
 
     enrichByQcnpjCrawler(item) {
+        this.enrichByService(
+            item,
+            qcnpjCrawlerUrl,
+            'enrichByQcnpjCrawler',
+            'companyName',
+            item.lead.company
+        );
+    }
+
+    enrichByReceitaWS(item) {
+        this.enrichByService(
+            item,
+            receitawsDataUrl,
+            'enrichByReceitaWS',
+            'cnpj',
+            item.lead.cnpj
+        );
+    }
+
+    enrichByService(item, serviceUrl, serviceEnrichLabel, serviceParamName, serviceParamValue) {
         var that = this;
         var id = item._id;
-        var company_name = item.lead.company;
-        if (company_name) {
-            var queryQcnpjCrawler = qcnpjCrawlerUrl + '/?companyName='+company_name;
-            request({url: queryQcnpjCrawler, headers: {token: that.token}}, function (error, response, body) {
+        if (serviceParamValue) {
+            var queryService = serviceUrl + '/?' + serviceParamName + '=' + serviceParamValue;
+            request({url: queryService, headers: {token: that.token}}, function (error, response, body) {
                 if (!error && response.statusCode == 200) {
                     var info = JSON.parse(body);
                     var options = {
@@ -47,77 +66,24 @@ class LeadEnrichmentService {
                         json: { lead_id: id, rich_information: info },
                         headers: {token: that.token}
                     };
-                    request(options, function(error, response, body){
-                        if (error) {
-                            console.log(error);
-                            that.classifyIfAllServicesAreReady('enrichByQcnpjCrawler', id);
+                    request(options, function(error) {
+                        if (!error) {
+                            that.updateEnrichAttempts(serviceEnrichLabel, id, true);
                         } else {
-                            that.updateEnrichAttempts('enrichByQcnpjCrawler', id, true);
-                            that.classifyIfAllServicesAreReady('enrichByQcnpjCrawler', id);
+                            console.log(error);
                         }
+                        that.classifyIfAllServicesAreReady(serviceEnrichLabel, id);
                     });
                 } else {
-                    var attempts = (item.lead.enrichByQcnpjCrawler ? (item.lead.enrichByQcnpjCrawler+1): 1);
-                    that.updateEnrichAttempts('enrichByQcnpjCrawler', id, attempts);
-                    that.classifyIfAllServicesAreReady('enrichByQcnpjCrawler', id);
+                    var attempts = (item.lead[serviceEnrichLabel] ? (item.lead[serviceEnrichLabel] + 1): 1);
+                    that.updateEnrichAttempts(serviceEnrichLabel, id, attempts);
+                    that.classifyIfAllServicesAreReady(serviceEnrichLabel, id);
                 }
             });
         } else {
-            var attempts = (item.lead.enrichByQcnpjCrawler ? (item.lead.enrichByQcnpjCrawler+1): 1);
-            that.updateEnrichAttempts('enrichByQcnpjCrawler', id, attempts);
-            that.classifyIfAllServicesAreReady('enrichByQcnpjCrawler', id);
-        }
-    }
-
-    enrichByReceitaWS(item, callback) {
-        var that = this;
-        var id = item._id;
-        if (item.lead && item.lead.cnpj) {
-            var queryReceitaws = receitawsDataUrl + '/?cnpj='+item.lead.cnpj;
-            request({url: queryReceitaws, headers: {token: that.token}}, function (error, response, body) {
-                if (!error && response.statusCode == 200) {
-                    var info = JSON.parse(body);
-                    var options = {
-                        uri: dataUpdateEnrichedLeadInfoUrl,
-                        method: 'POST',
-                        json: { lead_id: id, rich_information: info },
-                        headers: {token: that.token}
-                    };
-                    request(options, function(error, response, body){
-                        if (error) {
-                            console.log(error);
-                            that.classifyIfAllServicesAreReady('enrichByReceitaWS', id);
-                            return callback(response.statusCode);
-                        } else {
-                            that.updateEnrichAttempts('enrichByReceitaWS', id, true);
-                            that.classifyIfAllServicesAreReady('enrichByReceitaWS', id);
-                        }
-                    });
-                } else {
-                    var attempts = (item.lead.enrichByReceitaWS ? (item.lead.enrichByReceitaWS+1): 1);
-                    that.updateEnrichAttempts('enrichByReceitaWS', id, attempts);
-                    that.classifyIfAllServicesAreReady('enrichByReceitaWS', id);
-                }
-            });
-        } else {
-            var attempts = (item.lead.enrichByReceitaWS ? (item.lead.enrichByReceitaWS+1): 1);
-            that.updateEnrichAttempts('enrichByReceitaWS', id, attempts);
-            that.classifyIfAllServicesAreReady('enrichByReceitaWS', id);
-        }
-    }
-
-    classifyIfAllServicesAreReady(service_name, lead_id) {
-        if (this.enrichmentServicesReady == undefined) {
-            this.enrichmentServicesReady = [];
-        }
-        this.enrichmentServicesReady.push(service_name);
-        if (this.enrichmentServicesReady.indexOf('enrichByQcnpjCrawler') != -1 && this.enrichmentServicesReady.indexOf('enrichByReceitaWS') != -1) {
-            var options = {
-                url: classificationUrl + '/' + lead_id,
-                method: 'GET',
-                headers: {token: this.token}
-            };
-            request(options);
+            var attempts = (item.lead[serviceEnrichLabel] ? (item.lead[serviceEnrichLabel] + 1): 1);
+            that.updateEnrichAttempts(serviceEnrichLabel, id, attempts);
+            that.classifyIfAllServicesAreReady(serviceEnrichLabel, id);
         }
     }
 
@@ -126,7 +92,7 @@ class LeadEnrichmentService {
             '_id': lead_id,
             'lead' : {
                 'company': company,
-                'cnpj': cnpj
+                'cnpj': cnpj,
             }
         };
         this.enrichByReceitaWS(item);
@@ -149,6 +115,26 @@ class LeadEnrichmentService {
                 console.log(error);
             }
         });
+    }
+
+    classifyIfAllServicesAreReady(service_name, lead_id) {
+        if (this.enrichmentServicesReady == undefined) {
+            this.enrichmentServicesReady = [];
+        }
+        this.enrichmentServicesReady.push(service_name);
+        if (this.allServicesAreReady()) {
+            var options = {
+                url: classificationUrl + '/' + lead_id,
+                method: 'GET',
+                headers: {token: this.token}
+            };
+            request(options);
+        }
+    }
+
+    allServicesAreReady() {
+        return this.enrichmentServicesReady.indexOf('enrichByQcnpjCrawler') != -1
+            && this.enrichmentServicesReady.indexOf('enrichByReceitaWS') != -1;
     }
 
 }
