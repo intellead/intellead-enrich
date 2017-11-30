@@ -1,0 +1,14 @@
+{
+  "expectedEndpointQcnpj": {
+    "url": "http://qcnpj-crawler:3000/?companyName=intellead",
+    "headers": {
+      "token": "1"
+    }
+  },
+  "expectedEndpointReceitaws": {
+    "url": "http://receitaws-data:3000/?cnpj=12345678",
+    "headers": {
+      "token": "1"
+    }
+  }
+}
