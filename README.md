@@ -1,4 +1,4 @@
-<h1>Intellead Data</h1>
+<h1>Intellead Enrich</h1>
 
 
 Intellead Enrich aims to be an easy way to enrich information about leads.
