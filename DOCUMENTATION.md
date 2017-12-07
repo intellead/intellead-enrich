@@ -27,6 +27,7 @@ intellead-enrich is a very smaller component that provide a simple way to centra
 This way you do not need to install any other components for this to work.
 <h4>Dependencies</h4>
 This application depends on the following services:<br>
+intellead-security (provides authentication and authorization)<br>
 intellead-data (provides information of the leads to be enriched and persists new information)<br>
 receitaws-data (provides company information of the lead through cnpj)<br>
 qcnpj-crawler (provide lead company information by company name)<br>
@@ -50,11 +51,11 @@ Once the application is installed (check Installation) define the following sett
 The application uses other intellead services.<br>
 For this it is necessary to configure the URL variables.<br>
 You must config the following vars:<br>
-DATA_LEAD_INFO_URL - Full URL of Lead Info API from Data Service;<br>
+SECURITY_URL - Full URL of auth from intellead-security;<br>
 QCNPJ_CRAWLER_URL - Full URL of QCNPJ API from QCNPJ Crawler Service;<br>
 DATA_UPDATE_ENRICHED_LEAD_INFO_URL - Full URL of Update Enriched Lead Information API from Data Service;<br>
 RECEITAWS_DATA_URL - Full URL of ReceitaWS API from ReceitaWS Service;<br>
 CLASSIFICATION_URL - Full URL of Classification Service;<br>
 DATA_UPDATE_ENRICH_ATTEMPTS_URL - Full URL of Update Enrich Attempts of Data Service.<br>
 <h3>Copyrights and Licence</h3>
-TO DO
+Project copyright and license is available at <a href="https://github.com/intellead/intellead-enrich/blob/master/LICENSE">LICENSE</a>.
