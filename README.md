@@ -8,10 +8,6 @@ Intellead Enrich aims to be an easy way to enrich information about leads.
 This is the enrich center component of the intellead ecosystem, it implements the needed functionality to centralize the enrichment services.
 This is made using node.js.
 
-<h2>JavaScript</h2>
-
-This project will focus on ECMAScript 6.
-
 <h2>Documentation</h2>
 
 Project documentation is available at <a href="https://github.com/intellead/intellead-enrich/blob/master/DOCUMENTATION.md">DOCUMENTATION.md</a>.
