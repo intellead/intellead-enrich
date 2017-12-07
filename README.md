@@ -1,17 +1,19 @@
-<h1>Intellead Enrich</h1>
+# Intellead Enrich
 
+[![Build Status](https://travis-ci.org/intellead/intellead-enrich.svg?branch=master)](https://travis-ci.org/intellead/intellead-enrich)
+[![codecov](https://codecov.io/gh/intellead/intellead-enrich/branch/master/graph/badge.svg)](https://codecov.io/gh/intellead/intellead-enrich)
 
 Intellead Enrich aims to be an easy way to enrich information about leads.
 
-<h2>Description</h2>
+## Description
 
 This is the enrich center component of the intellead ecosystem, it implements the needed functionality to centralize the enrichment services.
 This is made using node.js.
 
-<h2>Documentation</h2>
+## Documentation
 
-Project documentation is available at <a href="https://github.com/intellead/intellead-enrich/blob/master/DOCUMENTATION.md">DOCUMENTATION.md</a>.
+Project documentation is available at [DOCUMENTATION.md](./DOCUMENTATION.md).
 
-<h2>Contributing</h2>
+## Contributing
 
-See the <a href="https://github.com/intellead/intellead-enrich/blob/master/CONTRIBUTING.md">CONTRIBUTING.md</a> document for details.
+See the [CONTRIBUTING.md](./CONTRIBUTING.md) document for details.
